@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="./defer1.js" defer></script>
+    <script src="./defer2.js" defer></script>
+    <script src="./defer3.js" defer></script> -->
+    <script>
+      window.onload = function () {
+        document.getElementById("btn").addEventListener("click", ceshi, false);
+
+        function ceshi() {
+          console.log("执行单击绑定事件");
+        }
+        while (true) {
+          console.log("111111");
+        }
+      };
+    </script>
+  </head>
+  <script></script>
+  <body>
+    <button id="btn">按钮</button>
+  </body>
+</html>

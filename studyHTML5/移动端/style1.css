@@ -1,0 +1,9 @@
+.menu {
+  width: 50px;
+  height: 150px;
+  border: 1px solid black;
+  position: fixed;
+  left: 50%;
+  bottom: 100px;
+  margin-left: 620px;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+  <body>
+    <div id="id1"></div>
+    <script type="text/babel">
+      //   function Zujian(props) {
+      //     return <div>{props.name}说：hello World!!!</div>;
+      //   }
+
+      //   class Zj extends React.Component {
+      //     render() {
+      //       return <div>{this.props.name}Hello World!!!!</div>;
+      //     }
+      //   }
+      //   let obj = { name: "小样板", age: "25", sex: "男" };
+      //   ReactDOM.render(<Zujian name="小样板" />, document.getElementById("id1"));
+      //   ReactDOM.render(<Zj name="小样板" />, document.getElementById("id1"));
+      let bRn = false;
+      class Zj1 extends React.Component {
+        showOrHidden() {
+          bRn = !bRn;
+          render();
+        }
+        render() {
+          return (
+            <div>
+              <h1 onClick={this.showOrHidden}>英雄展示(单击展示 or 隐藏)</h1>
+              <Zj2 />
+            </div>
+          );
+        }
+      }
+
+      class Zj2 extends React.Component {
+        name = ["亚索", "小炮", "蛮王"];
+        render() {
+          return (
+            <div style={{ display: bRn ? "block" : "none" }}>
+              {this.name.map((item, index) => {
+                return <p>{item}</p>;
+              })}
+            </div>
+          );
+        }
+      }
+      render();
+      function render() {
+        ReactDOM.render(<Zj1 />, document.getElementById("id1"));
+      }
+    </script>
+  </body>
+</html>

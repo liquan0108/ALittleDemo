@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0 , min-width:1 , max-width = 1 "
+    />
+    <title>Document</title>
+    <style>
+      .basic {
+        width: 200px;
+        height: 200px;
+        background-color: black;
+      }
+      @media all and (min-width: 300px) {
+        .change {
+          background-color: red;
+        }
+      }
+      @media all and (max-width: 299.8px) {
+        .change {
+          background-color: green;
+        }
+      }
+    </style>
+  </head>
+  <body style="min-width: 50px;">
+    <div class="basic change"></div>
+  </body>
+</html>

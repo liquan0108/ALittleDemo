@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* #box {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      #id2 {
+        height: 100%;
+        background-color: crimson;
+      }
+      #id1 {
+        height: 100%;
+        float: left;
+        width: 30px;
+        background-color: blue;
+      }
+
+      #id3 {
+        height: 100%;
+        width: 30px;
+        float: right;
+        background-color: aqua;
+      } */
+
+      /* #box {
+        height: 200px;
+        display: flex;
+        justify-content: start;
+      }
+      #id1 {
+        width: 30px;
+        height: 100%;
+        background-color: crimson;
+      }
+      #id2 {
+        background-color: darkblue;
+      }
+      #id3 {
+        background-color: darkorange;
+        height: 100%;
+        width: 30px;
+      } */
+      #box {
+        height: 200px;
+      }
+      #box > div {
+        display: inline-block;
+      }
+
+      #id1 {
+        width: 30px;
+        height: 100%;
+        background-color: red;
+      }
+
+      #id2 {
+        background-color: darkblue;
+      }
+      #id3 {
+        width: 30px !important;
+        height: 100%;
+        background-color: green;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        console.log(document.getElementById("id3").style.width);
+		
+		function Parent(){
+			this.name = '我';
+		}
+		
+		function Child(){
+		Parent.call(this);
+			this.age = '18';
+		}
+		
+		Child.prototype = Object.create(Parent.prototype);  
+		var s1 = new Child();
+		var s2 = new Child();
+		console.log(s1.__proto__.__proto__);
+	
+      };
+    </script>
+  </head>
+  <body>
+    <div id="box">
+      <!-- <div id="id1"></div>
+      <div id="id3"></div>
+      <div id="id2"></div> -->
+      <!-- <div id="id1"></div>
+      <div id="id2"></div>
+      <div id="id3"></div> -->
+      <div id="id1"></div>
+      <div id="id2"></div>
+      <div id="id3" style="width: 300px;"></div>
+    </div>
+    <br />
+    <div>
+      <div style="width: 30px; height: 30px; background-color: red;"></div>
+      <div>
+        <div style="width: 30px; height: 30px; background-color: green;"></div>
+      </div>
+      <div style="width: 30px; height: 30px; background-color: yellow;">
+        浮动元素
+      </div>
+    </div>
+  </body>
+</html>

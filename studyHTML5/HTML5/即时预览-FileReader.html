@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      window.onload = function () {
+        var inputFile = document.querySelector("#file");
+        inputFile.addEventListener("change", fn, false);
+
+        function fn() {
+          console.log(inputFile.files);
+          //创建读取事件
+          var fr = new FileReader();
+          // 拿到input转换的blob类型的数据，保存到fr对象中
+          fr.readAsDataURL(inputFile.files[0]);
+          // 读取成功
+          fr.onload = () => {
+            console.log("成功");
+            console.log(fr.result);
+            //  将数据图片数据给了img的src，达到预览效果
+            document.querySelector("img").src = fr.result;
+          };
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <input type="file" name="file" id="file" />
+    <img src="" alt="" />
+  </body>
+</html>

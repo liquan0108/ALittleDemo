@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box1 {
+        display: grid;
+        border: 1px solid black;
+        width: 300px;
+        height: 300px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-areas:
+          "a1 a2 a3"
+          "a4 a5 a6"
+          "a7 a8 a9";
+      }
+      .box1 div:nth-of-type(1) {
+        background-color: black;
+        border-radius: 50%;
+        grid-area: a5;
+      }
+      .child2 {
+        background-color: black;
+        border-radius: 50%;
+      }
+      .box1 > .child2:nth-of-type(1) {
+        grid-area: a1;
+      }
+      .box1 > .child2:nth-of-type(2) {
+        grid-area: a9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box1">
+      <div class="child1"></div>
+    </div>
+    <div class="box1">
+      <div class="child2"></div>
+      <div class="child2"></div>
+    </div>
+  </body>
+</html>

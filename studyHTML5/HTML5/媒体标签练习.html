@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>媒体标签</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      #videos {
+        width: 30%;
+        height: 80%;
+        background-color: black;
+      }
+      .controls-box {
+        display: flex;
+        justify-content: start;
+        width: 30%;
+        margin-top: -4px;
+        background-color: black;
+      }
+      .kg-box {
+        width: 7%;
+        flex-grow: 2;
+      }
+      .progress-bar {
+        flex-grow: 12;
+        position: relative;
+      }
+      .time-box {
+        width: 20%;
+        flex-grow: 6;
+        color: wheat;
+      }
+      .bottom {
+        height: 100%;
+        width: 100%;
+        background-color: gray;
+      }
+      img {
+        width: 37%;
+      }
+      .time-box {
+        display: inline-block;
+      }
+      .top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: violet;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        var videos = document.querySelector("#videos");
+        var btn = document.querySelector("#btn");
+        var sRr = document.querySelector("#sRr");
+        // 暂停/ 播放开关
+        var kg = true;
+        var startTimeBox = document.querySelector("#time-start");
+        var endTimeBox = document.querySelector("#time-end");
+        //当前时间和视屏长度
+        var currentTime;
+        var endTime;
+
+        var progress = document.querySelector(".progress-bar");
+        var top = document.querySelector(".top");
+
+        function stopVideo() {
+          if (!kg) {
+            clearInterval(this.timer);
+            videos.pause();
+            sRr.src = "../images/play.svg";
+            kg = true;
+          }
+        }
+        function runVideo() {
+          if (kg) {
+            videos.play();
+            sRr.src = "../images/暂停.svg";
+            kg = false;
+            // 阻止监听同一事件的其他事件监听器被调用。
+            event.stopImmediatePropagation();
+          }
+        }
+        // 视频播放时一直触发,本质是 currentTime 变化就会触发，跳转时会触发
+        videos.ontimeupdate = function () {
+          console.log(videos.currentTime);
+          // 获取当前播放的时间并格式化，并赋值给startTimeBox
+          currentTime = pattent(videos.currentTime);
+          startTimeBox.innerText = currentTime;
+          //进度条  播放时间/总时间*100+'%' 得到播放时间百分比, 与进度条百分比对应
+          console.log("1111111", progress.offsetWidth / videos.duration);
+          // 时间向上取整，与视频显示时间一致，防止出现时间停止，进度条还没走完
+          top.style.width =
+            (Math.ceil(videos.currentTime) / Math.ceil(videos.duration)) * 100 +
+            "%";
+          console.log(top.style.width);
+          // 播放结束停止
+          if (videos.currentTime === videos.duration) {
+            // 停止视频
+
+            stopVideo();
+          }
+        };
+        //播放结束时触发
+
+        videos.onended = function () {};
+
+        // 点击跳转修改currentTime，触发ontimeupdate事件同时修改了进度条
+        function goVideo() {
+          console.log(event.clientX - progress.offsetLeft);
+          console.log(progress.offsetWidth);
+          // 求点击位置相当于的播放位置   点击位置/总长度 = 当前时间/ 总时间
+          var time =
+            ((event.clientX - progress.offsetLeft) / progress.offsetWidth) *
+            videos.duration;
+
+          //时间小于零时按零算
+          if (time < 0) {
+            time = 0;
+          }
+          //取整，格式化时间,并显示
+          startTimeBox.innerText = pattent(Math.ceil(time));
+          // 设置当前时间等于跳转时间
+          videos.currentTime = time;
+        }
+
+        jRListener(btn, "click", runVideo);
+        jRListener(btn, "click", stopVideo);
+        jRListener(progress, "click", goVideo);
+        // 提前兼容性事件绑定
+        function jRListener(obj, DomEvent, fn) {
+          if (obj.addEventListener) {
+            obj.addEventListener(DomEvent, fn, false);
+          } else {
+            obj.attachEvent(DomEvent, fn, false);
+          }
+        }
+
+        // 当前视屏长度.需要监听canplay事件，否则长度为NAN
+        videos.oncanplay = function () {
+          console.log("视屏长度", videos.duration);
+          let miao = videos.duration;
+          endTime = pattent(miao);
+          //将时间赋值给endTimeBox
+          endTimeBox.innerText = endTime;
+        };
+        // 格式化时间返回00：00：00 形式
+        function pattent(miao) {
+          var hh = parseInt(miao / 3600);
+          if (hh < 10) hh = "0" + hh;
+          var mm = parseInt((miao - hh * 3600) / 60);
+          if (mm < 10) mm = "0" + mm;
+          var ss = Math.ceil((miao - hh * 3600) % 60);
+          if (ss < 10) ss = "0" + ss;
+          var length = hh + ":" + mm + ":" + ss;
+          if (miao >= 0) {
+            console.log(length);
+            return length;
+          } else {
+            return "NaN";
+          }
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <video id="videos">
+      <source src="./QQ视频.mp4" type="video/mp4" />
+    </video>
+    <div class="controls-box">
+      <div class="kg-box">
+        <a href="javascript:;" id="btn">
+          <img id="sRr" src="../images/play.svg" alt="" />
+        </a>
+      </div>
+      <div class="progress-bar">
+        <div class="bottom"></div>
+        <div class="middle"></div>
+        <div class="top"></div>
+      </div>
+      <div class="time-box">
+        <span id="time-start">00:00:00</span>
+        /
+        <span id="time-end">00:00:00</span>
+      </div>
+    </div>
+  </body>
+</html>

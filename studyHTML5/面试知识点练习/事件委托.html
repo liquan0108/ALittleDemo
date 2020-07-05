@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      // 事件委托：不在通过for循环给每个li标签绑定事件，而是给父盒子绑定事件，在通过事件对象evet获得单击的里元素
+      window.onload = function () {
+        document.querySelector("ul").addEventListener("click", run, false);
+
+        function run() {
+          window.event
+            ? console.log(window.event.target.innerText)
+            : console.log(event.target.innerText);
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <ul>
+      <li>111111</li>
+      <li>222222</li>
+      <li>333333</li>
+      <li>444444</li>
+    </ul>
+  </body>
+</html>

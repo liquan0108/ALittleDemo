@@ -1,0 +1,79 @@
+@number: 100px;
+@key: padding;
+@key: margin;
+@i: 1;
+// 注释
+/*
+注释
+*/
+.div@{i} {
+  @number: 100px;
+  width: @number;
+  @{key}: 50px;
+  @number: 1px;
+  .test {
+    height: 100px;
+    p {
+      background-color: red;
+    }
+    img {
+      display: block;
+    }
+    &:hover {
+      color: red;
+    }
+  }
+}
+@num: 20px;
+div {
+  width: @num * 10;
+  height: 10em + @num;
+}
+p {
+  padding: ~"(100/5)";
+}
+
+.contain {
+  width: 100px;
+  @media all and (max-width: 780px) {
+    max-width: 760px;
+  }
+}
+
+a {
+  width: round(3.4px);
+}
+#id1 {
+  background-color: red;
+}
+
+#id2 {
+  &:extend(#id1);
+}
+
+span {
+  #id1;
+  #bundle.tab();
+}
+#bundle() {
+  .button {
+    display: block;
+    border: 1px solid black;
+    background-color: grey;
+    &:hover {
+      background-color: white;
+    }
+  }
+  .tab {
+    color: red;
+  }
+  .citation {
+    color: red;
+  }
+}
+div {
+  border+: 1px;
+  border+: solid;
+  border+: red;
+}
+@import "./Sass-study.css";

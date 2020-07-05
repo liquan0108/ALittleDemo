@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+  <body>
+    <div class="id1"></div>
+    <script type="text/babel">
+      let data = ["name", "age", "sex"];
+
+      function changeStyle(key) {
+        console.log(event.target);
+        event.target.style.backgroundColor = "red";
+      }
+      let result = data.map((item, index) => {
+        console.log(index);
+        return (
+          <p
+            key={index}
+            onClick={() => {
+              changeStyle(index);
+            }}
+          >
+            {item}
+          </p>
+        );
+      });
+      ReactDOM.render(result, document.getElementsByClassName("id1")[0]);
+    </script>
+  </body>
+</html>

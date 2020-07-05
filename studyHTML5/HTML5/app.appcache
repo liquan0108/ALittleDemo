@@ -1,0 +1,16 @@
+CACHE MANIFEST
+
+#制定需要缓存的文件
+CACHE:
+    ../images/4.jpg
+
+#制定每次都需要请求的文件
+NETWORK:
+    ../images/3.jpg
+#这些*表示缓存所有文件
+
+FALLBACK:
+../images/22.png ../images/404.jpg
+
+#/ 代表任意文件无法获取就是用指定文件代替
+    

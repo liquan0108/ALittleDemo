@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      "user strict";
+      window.status = "已经选中该文本框";
+      var arr = [3, 6, 2, 4, 1, 5];
+      console.log(arr.sort());
+      console.log(arr.sort(desc));
+      function desc(a, b) {
+        return b - a;
+      }
+      var date = new Date();
+      var year = date.getFullYear();
+      var month =
+        date.getMonth() < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1;
+      var day = date.getDate();
+      console.log(year + "-" + month + "-" + day);
+      function pattern1() {
+        value = document.querySelector("#input").value;
+
+        let arr = value.replace(/[<>&]/g, function (value) {
+          switch (value) {
+            case "<":
+              return "&lt;";
+              break;
+            case ">":
+              return "&gt;";
+              break;
+            default:
+              return "&amp;";
+              break;
+          }
+        });
+        // ...............写一个function，清除字符串前后的空格。（兼容所有浏览器）......................\
+        // 自定义一个去除空格的原型方法
+        if (!value.qckg) {
+          String.prototype.qckg = function () {
+            return this.replace(/^\s+|\s+$/g, "");
+          };
+        }
+        console.log(value.qckg());
+      }
+      // ..............用js实现随机选取10–100之间的10个数字，存入一个数组，并排序。.......................\
+      var arr1 = [];
+      for (let i = 0; i < 10; i++) {
+        arr1.push(intRandoms(90, 10));
+      }
+      console.log(arr1);
+
+      console.log(arr1.sort(asc));
+      function asc(a, b) {
+        return a - b;
+      }
+      function intRandoms(endNum, startNum) {
+        return Math.ceil(Math.random() * endNum + startNum);
+      }
+      // ...............把两个数组合并，并删除第二个元素。......................\
+      var arr2 = ["a", "b", "c"];
+      var arr3 = ["d", "e", "f"];
+
+      var hebing = arr2.concat(arr3);
+      console.log("合并后的数组", hebing);
+      console.log("删除的第二个元素", hebing.splice(1, 1));
+      console.log("删除后的数组", hebing);
+      // ...............怎样添加、移除、移动、复制、创建和查找节点（使用原生JS实现）......................\
+      //   添加：appendChild(), 移除：removeChild(), 插入：insertBefore(), createElement(), getElementById(),getElementsByClassName() getElementsByTagName(),getElementsByName()
+
+      // ...............怎样添加、移除、移动、复制、创建和查找节点（使用原生JS实现）......................\
+      var url = "http://item.taobao.com/item.htm?a=1&b=2&c=&d=xxx&e";
+
+      var index = url.indexOf("?");
+      var str = url.slice(index + 1);
+      console.log("str", str);
+
+      var str_arr = str.split("&");
+      var newArr = {};
+      for (let i = 0; i < str_arr.length; i++) {
+        let kAndV = str_arr[i].split("=");
+        newArr[kAndV[0]] = kAndV[1];
+      }
+      console.log(newArr);
+      // ...............生成正则表达式对象，中间有空格......................\
+      var numss = / /;
+      //   判断一个字符串中出现次数最多的字符，统计这个次数
+
+      var strr = "asdfssaaasasasasaa";
+
+      console.log("0000000000", strr.split(""));
+
+      var zimu = {};
+      var jisu = 1;
+      var zifu = "";
+      for (let i = 0; i < strr.split("").length; i++) {
+        if (!zimu[strr.split("")[i]]) {
+          zimu[strr.split("")[i]] = 1;
+        } else {
+          zimu[strr.split("")[i]]++;
+        }
+      }
+      console.log("99999999999999", zimu);
+      for (const key in zimu) {
+        if (zimu.hasOwnProperty(key)) {
+          if (zimu[key] > jisu) {
+            jisu = zimu[key];
+            zifu = key;
+          }
+        }
+      }
+      console.log("999999999999zifu", zifu);
+      console.log("99999999999jisu", jisu);
+      // ...............将数字 12345678 转化成 RMB形式 如： 12,345,678......................\
+      var moneyNum = 11112345678;
+      console.log("yyy", moneyNum % 1000);
+      console.log(moneyNum.toString().split("").reverse());
+      // 倒叙arr
+      var dxarr = moneyNum.toString().split("").reverse();
+      var string = "";
+      var numlll = 5;
+      console.log(dxarr);
+
+      for (let i = 0; i < dxarr.length; i++) {
+        string += dxarr[i];
+        if (i === 2) {
+          string += ",";
+        }
+        // 从第五个下标开始，每过3个就添加一个逗号
+        if (i === numlll) {
+          string += ",";
+          numlll += 3;
+        }
+      }
+      console.log(string.split(",").reverse().join(",").replace(/^,/, ""));
+      console.log(numlll);
+      // ...............将数字 12345678 转化成 RMB形式 如： 12,345,678......................\
+
+      function add() {
+        var sum = 0,
+          len = arguments.length;
+        // arguments 是一个对应于传递给函数的参数的类数组对象。
+        //arguments.callee   指向当前执行的函数。
+
+        // arguments.caller    指向调用当前函数的函数。已被移除
+
+        // arguments.length    指向传递给当前函数的参数数量。
+
+        // arguments[@@iterator]
+        // 返回一个新的Array迭代器对象，该对象包含所传参数中每个索引的值。
+        // 注意:现在在严格模式下，arguments对象已与过往不同。
+        // arguments[@@iterator]不再与函数的实际形参之间共享，同时caller属性也被移除。
+        console.log(arguments);
+        for (var i = 0; i < len; i++) {
+          sum += arguments[i];
+          console.log("2222223333", arguments[i]);
+        }
+        return sum;
+      }
+
+      add(1, 2, 3, 4); // 10
+      // ---------------------------------------------------------------------
+      var buddyStrings = function (A, B) {
+        // 将A B切割成数组
+        var a_arr = A.split("");
+        var b_arr = B.split("");
+        // 判断是否为空
+        if (A === "" || B == "") {
+          return false;
+        } else if (a_arr.length !== b_arr.length) {
+          // 判断是否等长，不等长直接false
+          return false;
+        } else {
+          var num = 0;
+          var str = [];
+          // 计算不相等的个数,并存储不相等位置
+
+          for (let i = 0; i < a_arr.length; i++) {
+            if (a_arr[i] !== b_arr[i]) {
+              ++num;
+              str.push(i);
+            }
+          }
+
+          // 不相等的个数为2,交换位置,判断是否全等
+          if (num === 2) {
+            Intermediate = a_arr[str[0]];
+            a_arr[str[0]] = a_arr[str[1]];
+            a_arr[str[1]] = Intermediate;
+            // 数组转换成字符串并判断是否全等
+            return a_arr.join("") === b_arr.join("");
+          } else if (num !== 2 && num !== 0) {
+            // 不相等的个数不为2 和 0 时直接返回false
+            return false;
+          } else if (num === 0) {
+            // 判断是否亲密字符串（有两个及以上相等的字符，这两个字符互换也符合条件）
+            var obj = {};
+            for (let i = 0; i < a_arr.length; i++) {
+              // 不存在存到对象中
+              if (!obj[a_arr[i]]) {
+                obj[a_arr[i]] = 1;
+              } else {
+                // 已存在对象中，直接返回true
+                return true;
+              }
+            }
+            // 不是亲密字符串，则最后考虑 是否为 ab ba 型
+            return a_arr.reverse().join("") === b_arr.join("");
+          }
+        }
+      };
+      console.log(buddyStrings("ab", "ab"));
+      //-------------------------------------------------------------------
+
+      //   window.onload = function () {};
+    </script>
+    <div id="ele">
+      <input type="text" name="" id="input" oninput="pattern1()" />
+    </div>
+  </body>
+</html>

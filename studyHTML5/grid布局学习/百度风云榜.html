@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        display: grid;
+        width: 500px;
+        height: 700px;
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 20px;
+        column-gap: 20px;
+        grid-template-areas:
+          "a1 a2 a2 "
+          "a3 a2 a2"
+          "a4 a4 a5"
+          "a6 a7 a7";
+      }
+      .box > div:nth-child(1) {
+        grid-area: a1;
+      }
+      .box > div:nth-child(2) {
+        grid-area: a2;
+      }
+      .box > div:nth-child(3) {
+        grid-area: a3;
+      }
+      .box > div:nth-child(4) {
+        grid-area: a4;
+      }
+      .box > div:nth-child(5) {
+        grid-area: a5;
+      }
+      .box > div:nth-child(6) {
+        grid-area: a6;
+      }
+      .box > div:nth-child(7) {
+        grid-area: a7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div style="background-color: black;">1</div>
+      <div style="background-color: red;">2</div>
+      <div style="background-color: yellow;">3</div>
+      <div style="background-color: burlywood;">4</div>
+      <div style="background-color: green;">5</div>
+      <div style="background-color: gray;">6</div>
+      <div style="background-color: pink;">7</div>
+    </div>
+  </body>
+</html>

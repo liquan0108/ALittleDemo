@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 500px;
+        height: 500px;
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        /* 划分区域（合并单元格） a1 为一个区域；a2为一个区域；a3为一个区域 */
+        grid-template-areas:
+          "a1 a1 a1"
+          "a2 a2 a3"
+          "a2 a2 a3";
+        row-gap: 20px;
+        column-gap: 20px;
+      }
+      /* 给每个区域绑定一个盒子 */
+      .box div:nth-of-type(1) {
+        grid-area: a1;
+      }
+      .box div:nth-of-type(2) {
+        grid-area: a2;
+      }
+      .box div:nth-of-type(3) {
+        grid-area: a3;
+      }
+      .box1 {
+        width: 500px;
+        height: 500px;
+        display: grid;
+        grid-template-rows: repeat(3, 150px);
+        grid-template-columns: repeat(3, 150px);
+      }
+      .box1 > div {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div style="background-color: brown;">1</div>
+      <div style="background-color: green;">2</div>
+      <div style="background-color: blue;">3</div>
+    </div>
+    <div class="box1">
+      <div style="background-color: brown;">1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+    <div class="box2">
+      <div style="background-color: brown;">1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+  </body>
+</html>

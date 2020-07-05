@@ -1,0 +1,34 @@
+$number: 100px;
+$key: padding;
+// 注释
+/*
+注释
+*/
+div {
+  #{$key}: 9px;
+  width: $number;
+}
+
+@function sum($a, $b) {
+  @return $a + $b;
+}
+
+.div {
+  #{$key}: 50px;
+  font: {
+    size: 10px;
+    family: "宋体";
+  }
+  height: sum(1px, 2px);
+}
+
+@mixin color {
+  color: red;
+}
+@mixin height($height) {
+  height: $height;
+}
+span {
+  @include color();
+  @include height(300px);
+}

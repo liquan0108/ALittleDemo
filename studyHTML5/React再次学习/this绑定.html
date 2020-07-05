@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+  <body>
+    <div id="id1"></div>
+    <script type="text/babel">
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.clicks1 = this.clicks1.bind(this);
+        }
+
+        clicks(data) {
+          console.log(this, data);
+        }
+        clicks1() {
+          console.log(this, "1");
+        }
+        clicks2 = () => {
+          console.log(this, "2");
+        };
+        clicks3() {
+          console.log(this, "3");
+        }
+        render() {
+          return (
+            <div>
+              <button onClick={this.clicks.bind(this, "绑定")}>按钮</button>
+              <button onClick={this.clicks1}>按钮</button>
+              <button onClick={this.clicks2}>按钮</button>
+              <button
+                onClick={() => {
+                  this.clicks3();
+                }}
+              >
+                按钮
+              </button>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <App />,
+        document.getElementById("id1"),
+        console.log("dom渲染完成")
+      );
+    </script>
+  </body>
+</html>

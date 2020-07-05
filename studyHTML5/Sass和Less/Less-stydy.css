@@ -1,0 +1,49 @@
+/*
+注释
+*/
+@import "Sass-study.css";
+.div1 {
+  width: 1px;
+  margin: 50px;
+}
+.div1 .test {
+  height: 100px;
+}
+.div1 .test p {
+  background-color: red;
+}
+.div1 .test img {
+  display: block;
+}
+.div1 .test:hover {
+  color: red;
+}
+div {
+  width: 200px;
+  height: 30em;
+}
+p {
+  padding: (100/5);
+}
+.contain {
+  width: 100px;
+}
+@media all and (max-width: 780px) {
+  .contain {
+    max-width: 760px;
+  }
+}
+a {
+  width: 3px;
+}
+#id1,
+#id2 {
+  background-color: red;
+}
+span {
+  background-color: red;
+  color: red;
+}
+div {
+  border: 1px, solid, red;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: aqua;
+        margin: 0 auto;
+        position: relative;
+        top: 50%;
+        /* margin-top: -50px; */
+        /* 以元素中心为基点向y轴进行移动
+            可通过transform-origin 改变基点位置。
+         */
+        transform: translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div></div>
+  </body>
+</html>
