@@ -1,0 +1,117 @@
+scroll家族:
+	网页正文内容宽度：document.body.scrollWidth;
+	网页正文内容高度：document.body.scrollHeight;
+	网页被卷去的高：document.body.scrollTop;  	(它就是当你滑动滚轮浏览网页的时候,网页隐藏在屏幕上方的距离)
+	网页被卷去的左：document.body.scrollLeft;
+	把内容滚到指定坐标: window.scrollTo(xpos,ypos) xpos,ypos 都是必须的
+	----------------------------------------------------------------------------------------
+使用scroll家族:	
+	1.监听滚动事件
+		window.scroll = function(){
+			..
+		}
+	2.不同浏览器访问scroll家族
+		2.1 无文档声明的网页(<!DOCTYPE HTML>)
+			 document.body.scrollTop
+			 document.body.scrollLeft
+		2.2 火狐和其他浏览器
+			 document.documentElement.scrollTop
+			 document.documentElement.scrollLeft
+		2.3 ie9 和 最新的浏览器
+			 window.pageYOffset
+			 window.pageXOffset
+	3.使用scroll		 
+		var	docScrollTop = document.body.scrollTop || document.documentElement.scrollTop ||window.pageYOffset||0
+		var docScrollLeft =  document.body.scrollLeft || document.documentElement.scrollLeft || window.pageXOffset
+	4.封装scroll
+	 function scroll() {
+        if(window.pageYOffset !== null){
+            return {
+                top: window.pageYOffset,   //返回Json对象 {key:value,}
+                left: window.pageXOffset
+            }
+        }else if(document.compatMode === "CSS1Compat"){ // 判断是否怪异模式
+            return {
+                top: document.documentElement.scrollTop,   //不是怪异模式
+                left: document.documentElement.scrollLeft
+            }
+        }else{
+            return {
+                top: document.body.scrollTop,
+                left: document.body.scrollLeft
+            }
+        }  
+    }
+	----------------------------------------------------------------------------------------
+	window.onscroll = function(){   // 页面滚动时触发方法
+			....
+		}
+	-------------------------------------------------------------------------------------------------------
+	案例:
+		导航栏固定:
+			卷动一定像素后,将导航栏设置为固定定位,同时给它的下一个兄弟节点设置一个marginTop,防止脱标后兄弟顶上来,
+			回滚后,设置为静态定位(不定位),
+		浏览器左/右边广告:
+			跟随页面滚动,(scroll().top,leader = (target - leader))
+			-----------------------------------------------
+		小火箭返回顶部:
+			点击返回滚动,慢慢回到顶部;(scrollTO(x,leader), leader = (target - leader))
+			
+	
+-------------------------------------------------------------------------------------------------------------------------------
+JSON:
+	JSON(JavaScript Object Notation: JavaScript对象表示法)是一种轻 量级的数据交换格式，我们称之为JavaScript对象表示法。
+	使用JSON进行数据传输的优势之一。JSON 实际上就是JavaScript。
+	-------------------------------------------------------------------------------------------------------------------
+	格式:
+		var myJson = {key1:value1,key2:value2,...}
+
+	访问:
+		console.log(myJson.key1)
+	-----------------------------------------------------------------------------------------------------------------------------
+	遍历Json:
+		for in
+		var Json = {
+			key1:value1,
+			key2:value2,
+			key3:value3,
+			key4:value4
+			}
+		for(var k in Json){   // 遍历Json中的key值
+			console.log(k);=>  key1,key2,key3,key4
+			Json[k]         =>   拿到k值对应的value
+		}
+
+
+--------------------------------------------------------------------------------------------------
+浏览器开始遵循W3C标准解析css，此时我们称为严格模式（strict mode）。我们可以通过document.compatMode的值来判断是否处于标准模式
+怪异模式（quirks）,与上边相反。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

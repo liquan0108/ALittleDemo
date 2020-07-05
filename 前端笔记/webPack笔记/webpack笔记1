@@ -1,0 +1,245 @@
+Webpack是什么：
+	Webpack是一种前端资源构建工具，一个静态模块打包器（module bundler）。在Webpack看来,前端的所有资源支文件js/json/css/img/less/..都会作为模块处理。
+    它将根据模块的依赖关系进行静态分析，打包生成对应的静态资源(bundle)。
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------------
+构建工具：
+	包含一些小的第三方编译工具，方便统一管理维护。
+		编译工具：用于将代码转换成其他平台/浏览器可以识别的文件/代码。
+
+react模块化开发需要引入其他资源：
+	如：引入样式/其他组件
+		import  './index.css'
+		import Zujian from '../component/Zujian'
+而这些资源需要全部交给构建工具去处理（如：webpack）。首先要告诉webpack打包的起点，即入口文件。此时webpack以这个入口文件开始打包，他会将文件中的每一个依赖记录好，形成依赖关系树状结构图。
+  
+				入口文件
+					|
+	   ----------------------------------
+	  |			|		|        |		|
+	 less	   css     组件      js		json
+  
+  然后根据依赖关系图的先后循序，依次将资源引入，形成一个chunk（代码块）。在对代码块进行处理，如：将less文件编译成css文件，js资源编译成浏览器可识别的js。处理的过程被成为打包，。
+  输入的文件为 bundle（包）。 经过打包处理的文件就可以在浏览器平稳运行了。所以webpack被称为静态模块打包器。
+-------------------------------------------------------------------------------------------------------------------------------------------
+安装使用
+	1.安装node.js
+	2.通过npm全局安装webpack
+	  cmd下直接输入命令
+		下载 webpack 和 webpack-cli（通过该包可以用指令使用webpack中的功能）。全局安装：将来可已通关指令来全局调用他们。会把以前下载的旧的包覆盖。
+		npm install webpack webpack-cli -g
+	3.本地安装webpack
+		在项目的主文件中输入命令
+		npm install webpack webpack-cli -D。  -D 会将webpack添加到开发依赖
+
+	4. 目录结构
+		在项目目录下，新建config文件夹，用于存放配置文件；src文件夹，用于存放源码；out文件夹，用于存放打包生成文件，
+		config
+		build
+		src
+		| index.js   （入口文件）
+		|
+		
+	5.使用	
+	打包命令：
+	 一、开发环境：
+			命令行: webpack 入口文件路径 -o  输出文件存放的路径  --mode=development
+			例如：
+						webpack ./src/index.js -o ./build/built.js - -mode=development
+			命令解释： webpack会以 ./src/index.js 为入口文件开始打包，打包后输出到. /build/bui1t.js,整体打包环境，是开发环境。此时会产生built.js文件。
+			
+			注意：
+				开发环境打包后文件变得更大了。代码是可以运行的。在html环境中通过<script>引入js文件即可运行。
+				
+	二、生成环境：
+			命令行：
+						webpack ./src/index.js -o ./build/built.js - -mode=production
+			命令解释： webpack会以 ./src/index.js 为入口文件开始打包，打包后输出到. /build/bui1t.js,整体打包环境，是生产环境
+			
+			注意：
+				生产环境打包后压缩代码，但是文件也变大了，代码是可以运行的。打包产生的js文件在html环境中通过<script>引入js文件即可运行。
+	结论：
+		1.webpack能打包js/json资源，如不下载其他解析包是不能处理其他如：css/img等资源的。
+		2.生产环境比开发环境多一个代码压缩。
+		3.不论是开发环境还是生产环境，打包后文件都变大了。但是生产环境打包的文件比开发环境打包的文件小。
+		4.生产环境和开发环境将ES6模块化编译成浏览器能识别的模块化
+	---------------------------------------------------------------------------------------------------------------------------------
+	loader
+		1. webpack配置文件 
+			webpack.config.js  (作用：指示webpack干那些活儿。当运行webpack指令时，会加载里面的配置)
+	
+			所有的构建工具都是基于nodejs平台运行的~模块化默认采用commonjs。
+			commonjs需要用module.exports ={} 暴露对象。
+		-------------------------------------------------------------------------------------------------------
+		// resolve用来拼接绝对路径的方法
+			const {resolve} = require('path');
+		//㈡引入
+			const HtmlWebpackPlugin = require('html-webpack-plugin')
+			
+			module.exports={
+				//webpack配置
+			 //1. 入口起点,可以有多个
+				entry：{
+					app：'./src/index.js',
+					secrh：'./..../文件'
+				}
+				// entry：'./src/index.js',
+			//2. 输出
+				output:{
+					// 输出文件名
+					filename: 'built.js',
+					// 输出路径，一般为绝对路径，防止出错。resolve用来拼接绝对路径的方法，_dirname 为nodejs的变量，代表当前文件的目录绝对路径
+					path：resolve(_dirname, 'build')
+					
+				}
+			//3. loader 配置 。loader 描述了 webpack 如何处理 非 JavaScript(non-JavaScript) _模块_，并且在 bundle 中引入这些依赖。
+				module:{
+					rules:[
+					//详细的 loaderde 配置，可匹配多种文件。①下载。需要下载对应的包(style-loader)(css-loader)文件。 ②使用
+						{
+							//匹配css文件
+							test: /\.css$/,
+							// 是用那些loader进行处理
+							use:[ // 使用哪些包解析匹配的文件。
+							// use数组中loader执行顺序：从右到左。注意书写顺序
+								// 2. 创建<style>标签，将js中的样式资源插入进行，添加到<head>标签中生效。需要下载’style.loader‘包
+								'style-loader',
+								// 1. 将css文件变成commonjs模块加载js中，里面内容是样式字符串。需要下载’css-loader‘包
+								'css-loader'	
+							]
+						},
+						{
+							//匹配图片文件，处理不了html中的img图片。需要下载两个包“url-loader”、“file-loader”
+							test: /\.(jpg|png|gif)$/,
+						use:[
+							loader:'url-loader',
+							// 判断
+							options:{
+								//图片小于8kb就会被base64处理
+								//优点：减少请求数量（减轻服务器压力）；缺点： 图片体积更大
+								limit: 8 * 1024
+							
+							//问题:因为url-loader默认使 用es6模块化解析，而html - loader引入图片是commonjs
+							//解析时会出问题: <img src = [object Module] />
+							//解决:关闭url- loader的es6模块化，使用commonjs解析
+								esModule: false
+							//给图片进行重命名
+							// [hash:10]取图片的hash的前10位
+							// [ext]取文件原来扩展名
+								name: ' [hash:10].[ext]'
+							}
+						]
+						},
+						{	// ‘html-loader’ 包专门用来处理html中img图片。
+							test: /\.html$/,
+							loader: 'html-loader'
+						}，
+						{
+							// 匹配打包其他资源（如：字体图标）
+							// 排除 css|js|html|less 资源，来达到打包其他资源
+							exclude：/\.(css|js|html|less)$/,
+							loader: 'file-loader'
+						}
+					]
+				}			
+			//4. plugins配置
+				plugins:[
+					//详细的plugins配置。㈠下载 ㈡引入  ㈢ 使用
+					//由于插件可以携带参数/选项，你必须在 webpack 配置中，向 plugins 属性传入 new 实例。根据你的 webpack 用法，这里有多种方式使用插件。
+					
+					//功能:不赋值template会默认创建一个空的HTML，自动引入打包输出的所有资源(JS/CSS)
+					//需求:需要有结构的HTML文件
+
+					new HtmlWebpackPlugin({
+					// 复制 './src/index.html'文件结构，与入口文件夹中html文件合并，并自动引入打包输出的所有资源（js/css）
+					template: './src/index.html'
+					})
+			]
+			//5. mode配置 
+				mode: 'development',
+				//mode: 'production',
+			}
+		注意：	
+			下载解析包 cnpm install --save-dev html-loader。
+			下载包时下载到最外层文件中，因为node找包时本文件找不到会去外层文件找。
+			生成webpack.config.js 后，可直接在该目录下，使用 webpack 命令打包，不需要指定 入口文件、输出文件和模式。
+			生成的js文件其他页面都可以引用。只要路径写对。
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1.2 Webpack五个核心概念
+	1） Entry
+		入口(Entry)指示Webpack 以哪个文件为入口起点开始打包,分析构建内部依赖图。
+	2） Output
+		输出(Output)指示Webpack打包后的资源bundles 输出到哪里去,以及如何命名。
+	3） Loader
+		Loader让Webpack能够去处理那些非JavaScript文件(webpack自身只理解JavaScript)。
+		loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL。loader 甚至允许你直接在 JavaScript 模块中 import CSS文件
+	4） Plugins
+		插件(Plugins)可以用于执行范围更广的任务。插件的范围包括，从打包优化和压缩，一直到重新定义环境中的变量等。
+
+	5） Mode
+		模式(Mode)指示Webpack使用相应模式的配置。两种模式都会启用一些插件。
+		选项                                               描述                                                      特点
+		development	（开发）			会将process.env.NODE_ENV的值设为development。									能让代码在本地调试运行
+								启用NamedChunksPlugin和NamedModulesPlugin。
+
+		production	（生产）			会将process.env.NODE _ENV的值设为production。									能让代码优化上线运行的环境
+									启用FlagDependencyUsagePlugin,
+										FlagIncludedChunksPlugin,
+							ModuleConcatenationPlugin, NoEmitOnErrorsPlugin,
+						OccurrenceOrderPlugin, SideEffectsFlagPlugin和UglifyJsPlugin.
+
+webpack 不会重复打包同一个文件。
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+webpack 打包作用：
+	1.把这些不同的静态资源的类型把它打包成一个js，然后我们在html里面去引用这个js的时候，我们的html里面的js就可以正常的运行然后去执行我们的操作
+	2.因为我们大家知道做前端项目的时候，大家应该有经验就是我们希望把很多零碎的js打包成一起，因为这样可以减少HTTP请求
+	3.同样的我们希望使用模块依赖，因为我们会做很多可复用的代码，把它写到一个模块里面去，这样的话我们在下一次有一个新项目的时候可以再去使用原来的那个模块，
+	  而不需要再把原来的代码去重新写一遍，或者是你要去拷贝一份，你拷贝一份的意思就是你两个项目如果使用同一份的这个代码，
+	  它里面有一个问题，那你就要去修改两边，对不对，所以如果你项目有很多个，你10来个，那你每个地方都要去改，所以这就是模块化的意义
+	4.因为webpack可以在浏览器不支持es6的情况下让你使用es6语法，最新的webpack版本已经不需要配置也能够编译es6语法。
+	
+	源文件-->webpack-->bundle-->浏览器识别
+				+
+			  自动化
+
+
+
+
+
+
+
+打包					 自动化：开发服务器 devServer			提取css 			js语法检查eslint（规范代码风格和检查语法错误）   						压缩html
+										
+打包样式					自动编译							css兼容				js兼容（将es6+语法解析成es5-，使浏览器识别，注意promise兼容性）
+打包html					自动打开浏览器						压缩css				js压缩 （生产环境自动压缩js，不需要配置）
+打包图片					自动刷新浏览器						
+打包其他资源
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+webpack
+mobx/
+
+less
+	Less 是一门 CSS 预处理语言，它扩充了 CSS 语言，增加了诸如变量、混合（mixin）、函数等功能，让 CSS 更易维护、方便制作主题、扩充。
+
+	Less 可以运行在 Node、浏览器和 Rhino 平台上。网上有很多第三方工具帮助你编译 Less 源码。
+------------------------------------------------------------------------------------------------------------------------------------------
+
+  
+  
+  
+
+  

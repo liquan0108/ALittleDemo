@@ -1,0 +1,98 @@
+offset家族:
+	offset(自己)
+	目的:获取元素尺寸
+		.style.  只能得到行内样式
+	1.offsetWidth、offsetHeight
+		得到对象的宽度和高度(自己的)
+		offsetWidth = width + border + padding
+		offsetHeight = height + border + padding
+		使用:
+		object.offsetWidth
+	2.offsetLeft、offsetTop(筋斗云特效)
+		offsetLeft: 自己的左边框 到 定位了的父级盒子的左边框 的距离
+					不算父亲的border,若父级都没定位则以body为准
+		offsetTop: 同上
+	3.offsetParent
+		返回该对象的带有定位的父级
+		
+offsetLeft 和 style.left的区别
+	一、
+		使用offsetLeft的盒子,可以不定位,就能返回盒子距离左侧的位置;
+		而使用style.left的盒子,则必须先让自己定位,只有定位了的盒子才有style.left属性
+	二、
+		使用offsetLeft的盒子,返回的时数值型;
+		而是用style.left的盒子,则返回的时带px的字符串;
+	三、
+		offsetLeft只读、style.left 可读写
+			注意:使用style赋值时要最后加上像素 (+"px")
+	四、
+		style.left只能得到的是元素行内样式,若没指定则返回空字符串
+		offsetLeft各种样式都能拿到
+---------------------------------------------------------------------------------------------------------
+事件对象(event):
+	再触发DOM上的某个事件时，会产生一个事件对象event，这个对象中包含着所有与触发事件有关的信息。
+	ie有兼容性问题,
+	使用时:
+	var event =	window.event || event
+
+	-------------------------------------------------------------------------------------------------------------
+	pageX  clientX  screenX 区别
+	
+	screenX:是以我们的电脑屏幕为基准点测量
+	pageX:以我们的  文档   （绝对定位）  的基准点 对齐
+	clientX:以可视区域(浏览器窗口内容区)为基准点,类似于固定定位  
+	
+	-----------------------------------------------------------------------------------------------------------
+	属性                         作用
+	data			返回拖拽对象的URL字符串（dragDrop）
+	width			该窗口或框架的高度
+	height			该窗口或框架的高度
+	pageX			光标相对于该网页的水平位置（ie无）
+	pageY			光标相对于该网页的垂直位置（ie无）
+	screenX			光标相对于该屏幕的水平位置
+	screenY			光标相对于该屏幕的垂直位置
+	target			该事件被传送到的对象
+	type			事件的类型
+	clientX			光标相对于该网页的水平位置 （当前可见区域）
+	clientY			光标相对于该网页的水平位置
+	
+	
+--------------------------------------------------------------------------------------------------------------------------
+放大镜效果:
+		
+		1.  父盒子套着两个一大一小的子盒子,若在父盒子定义鼠标悬浮显示大盒子,移除隐藏大盒子,则鼠标从父盒子移到子大盒子上,则大盒子不会消失,
+		  因为大盒子还是在子盒子中(事件冒泡)
+		2. 如果超出范围,则让黄盒子一直在框边上(style.top = "0px"),
+					if(鼠标坐标 - 黄盒子距定位的父亲的距离 < 0) {
+						黄盒子.style.left/top = "0px"
+					}
+		
+		3.移除盒子隐藏时,注意两个移除方法的区别 
+			onmouseout		鼠标移出      (鼠标离开指定元素触发事件，含子元素区域。)
+			onmouseleave：    移出事件。      (不支持冒泡，不包含子元素的区域)
+--------------------------------------------------------------------------------------------------------------------------
+水平滑动条效果:
+		1.点击拖动:
+			鼠标按下事件(onmousedown)中在包含一个鼠标移动事件(onmousemove),
+				并且移动事件的对象必须是document.(在文档中移动)
+			kuai.onmousedown = function (){
+				document.onmousemove = function(){
+					.........
+				}
+				
+				document.onmouseup = function () {   // 若使用kuai.onmouseup,由于滑块不能竖直移动,当鼠标移出滑块在文档中弹起,则关闭不了
+				  console.log("弹起");
+				  // 鼠标弹起必须为document对象,因为,若是滑块对象则必须在滑块中弹起,否则将一直滑动
+				  document.onmousemove = null;
+				  document.onmouseup = null;     // 清空此方法,防止点击其他位置时一直调用
+				  }
+        };
+			}
+		2.鼠标弹起
+			每次按下鼠标就要重写加载一次弹起事件
+		
+		
+		3.滑块要防止被选中,因为选中后在拖动,会出现一直跟随鼠标滑动的bug
+			window.getSelection ? window.getSelection().removeAllRanges(): document.selection.empty();
+          
+	

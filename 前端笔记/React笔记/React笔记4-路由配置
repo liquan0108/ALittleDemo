@@ -1,0 +1,109 @@
+React路由配置:
+	去github搜索 react-router
+	注意:引入router时要用(BrowserRouter as Router),不能直接用router(import Router from 'react-router-dom')
+<Route>:
+   (1)path属性:与location匹配时会渲染相应组件
+      path通配符:  <Route path = "/zzj1/id2..." children={<Child />} />  匹配所有的 "/zzj1/.." 路径,id1/id2可自定义,
+     
+	路由匹配规则是从上到下执行，exact是Route的一个属性，不赋值时为严格匹配模式
+	(2)exact属性:
+	      1)当exact为false时，根据路由匹配所有组件，当路径为:"/zzj2/zzj3"时,会匹配 “/”、“/zzj2”、“/zzj2/zzj3”,即 会调用相应路径下的组件进行渲染页面   
+	        不嵌套<Switch>标签,不是严格匹配模式(exact)时:
+			  <Router>
+				<Route path="/">
+						<Zzj1 />
+				</Route>
+				<Route path="/zzj2">
+						<Zzj2 />
+				</Route>
+				<Route path="/zzj2/zzj3">
+						<Zzj3 />
+			  </Route>
+			
+			</Router>
+          2)当所有组件的exact属性为true时，path和location路径“/zzj2/zzj3” 仅匹配path = “/zzj2/zzj3” 对应的组件、无法匹配到其他。
+	         一旦发现匹配，就不再其余的规则了,path值相同时只会渲染第一个),
+	(3)child属性: children = {函数/组件}。例:children={<Childs/>}  //  children={this.run} 
+	            1)当值为函数时路径不匹配也会执行。
+				2)当为组件时,路径不匹配不会渲染组件。
+                3)不会创建新组件				
+	(4)render属性: render = {函数}。例:   <Route redner={(props) => (<router.componentName {...props} route={router.routers}/>)} />,
+	            1)值必须为函数,可使用箭头函数访问组件。可自定义属性给子组件传值(嵌套路由时使用),
+				2)路径不匹配不会执行。
+                3)render属性,不会创建新的组件				
+	(5)component属性: component = {函数/组件名}。 例:  component={this.run} (方法)  // component={Zzj} (组件)
+	            1)值为函数时必须有返回值(return),路径不匹配不会执行。
+	            2)值为组件时会将路由信息传入组件(组件中通过this.props接收), 
+				3)使用component 会创建一个新组件,导致现有组件的卸载和新组件的加载，而不仅仅是更新现有组件
+				(
+					<Route component={() => (<Bar idx={this.state.idx}/>)}/>每次改变都将导致组件Bar卸载和挂载。
+					其背后的原理在于，react在比较组件状态以便决定如何更新dom节点时，首先要比较组件的type和key。
+					在使用<Route component={() => (<Bar idx={this.state.idx}/>)}/>时，由于调用了React.createElement，
+					组件的type不是Bar这个类，而是一个匿名函数。App组件每次render时都生成一个新的匿名函数，
+					导致生成的组件的type总是不相同，所以会产生重复的unmounting和mounting。
+					-------------------------------------------------------------------------------------------------
+					所以正确的写法应该是
+								<Route render={() => (<Bar idx={this.state.idx}/>)}/>
+				)
+				
+<Switch>:将会根据路径,开始寻找相匹配的<Route>。与path相同时将会被匹配到，紧接着 <Switch>会停止继续匹配并且渲染(Switch只会匹配到第一个)
+--------------------------------------------------------------------------------------------------------------------------------------------------
+什么是内联函数？
+   内联函数是指那些定义在类体内的成员函数，即该函数的函数体放在类体内。
+--------------------------------------------------------------------------------------------------------------------------------------------------	
+嵌套路由:
+		使用嵌套路由在父级不能用exact， 因为当你匹配路由时路径加了子路由，因为严格匹配,导致父级路由路径不匹配从而父子组件都显示不了。
+		 例如你这个/user/details 使用了exact，当路径变为/user/details/msg是匹配不到/user/details的，这样的话就无法渲染Details而msg又是在Detail里面所以也不会渲染
+		 
+		<Router path = '/location:3000/' />  <Router path = '/location:3000' /> 这两个为同一路径,一般前者用于嵌套路由中显示子路由的默认页面
+---------------------------------------------------------------------------------------------------------------------------------------------------
+路径解析模块
+		nodejs官网的url模块:
+		  在react里面使用url模块: cnpm install url --save    
+		  http://localhost:3000/zzj3/aa?aid=1
+          url.parse(this.props.location.search, true).query.参数名(aid)
+ 
+ 
+ react动态路由/传值
+ 
+     1.动态路由配置:
+	    注意:子组件若想获得url信息,需要将子组件放入 component属性中
+	       <Route path="/content/:id" component={Content} />
+	 
+	 2.对应的动态路由渲染的组件里面获取传值
+				this.props...
+				
+	 3.传值: this.value.key	
+				跳转:<Link to={`/content/${this.value.key}`}>{this.value.value}</Link>
+				
+
+ 
+	1.获取 this.props.location.search
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+
+
+    

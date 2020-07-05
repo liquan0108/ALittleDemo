@@ -1,0 +1,87 @@
+
+	创建对象有几种方法：
+		第一种：Object构造函数创建
+		var o11=new Object({name:'o11});
+		第二种：使用对象字面量表示法
+		var o1={name:'o1};
+		第三种：使用工厂模式创建对象
+		function createPerson(name,age,job){
+		 var o = new Object();
+		 o.name = name;
+		 o.age = age;
+		 o.job = job;
+		 o.sayName = function(){
+		  alert(this.name); 
+		 };
+		 return o; 
+		}
+		var person1 = createPerson('Nike',29,'teacher');
+		第四种:使用构造函数创建对象
+		function Person(name,age,job){
+		 this.name = name;
+		 this.age = age;
+		 this.job = job;
+		 this.sayName = function(){
+		 alert(this.name);
+		 }; 
+		}
+		var person1 = new Person('Nike',29,'teacher');
+		第五种：原型创建对象模式
+		function Person(){}
+		Person.prototype.name = 'Nike';
+		Person.prototype.age = 20;
+		Person.prototype.jbo = 'teacher';
+		Person.prototype.sayName = function(){
+		 alert(this.name);
+		};
+		var person1 = new Person();
+		person1.sayName();
+		第六种：组合使用构造函数模式和原型模式
+		function Person(name,age,job){
+		 this.name =name;
+		 this.age = age;
+		 this.job = job;
+		}
+		Person.prototype = {
+		 constructor:Person,
+		 sayName: function(){
+		 alert(this.name);
+		 };
+		}
+		var person1 = new Person('Nike',20,'teacher');
+	-----------------------------------------------------------------------------------------------------------------------------
+	原型构造函数、实例、原型链。
+	
+		构造函数：new后边的函数。
+		实例：new出来的对象。
+		原型链：
+			每个构造函数都有原型对象，每个构造函数实例都包含一个指向原型对象的内部指针（proto），
+			如果我们让第一个构造函数的原型对象等于第二个构造函数的实例，结果第一个构造函数的原型对象将包含一个指向第二个原型对象的指针，
+			再然第三个原型对象等于第一个构造函数的实例，这样第三个原型对象也将包含指向第一个原型对象的指针，以此类推，就够成了实例于原型的链条，
+			这就是原型链的基本概念。
+	-----------------------------------------------------------------------------------------------------------------------------
+	 instanceof原理：
+	 老师说：instanceof的判断逻辑是： 从当前引用的proto一层一层顺着原型链往上找，能否找到对应的prototype。找到了就返回true。
+			但是，利用原型继承，切断了原来的prototype的指向，而指向了一个新的对象，
+	 a instanceof B
+		检测a的原型链（__proto__）上是否有B.prototype，若有返回true，否则false。
+		
+	
+	new运算符：
+		步骤一、一个新对象被创建。它继承自foo.prototype
+		步骤二、构造函数foo被执行。执行的时候，相应的传参会被传入，同时上下文(this)会被指定为这个新实例。
+			new foo等同于new foo(),只能用在不传递任何参数的情况.
+		步骤三、如果构造函数返回了一个“对象”，那么这个对象会取代整个new出来的结果。如果构造函数没有返回对象，那么new出来的结果为步骤1创建的对象
+	
+-------------------------------------------------------------------------------------------------------------------------------	
+	Javascript语言的继承全靠一种很奇特的"原型链"（prototype chain）模式，来实现继承。
+1.构造函数
+	构造函数 ，是一种特殊的方法。主要用来在创建对象时初始化对象。每个构造函数都有prototype(原型)属性
+2.原型模式
+	每个函数都有prototype(原型)属性，这个属性是一个指针，指向一个对象，这个对象的用途是包含特定类型的所有实例共享的属性和方法，
+	即这个原型对象是用来给实例共享属性和方法的。我们使用这个原型对象来共享实例的属性和方法的模式就叫原型模式
+3.原型链：
+			每个构造函数都有原型对象，每个构造函数实例都包含一个指向原型对象的内部指针（proto），
+			如果我们让第一个构造函数的原型对象等于第二个构造函数的实例，结果第一个构造函数的原型对象将包含一个指向第二个原型对象的指针，
+			再然第三个原型对象等于第一个构造函数的实例，这样第三个原型对象也将包含指向第一个原型对象的指针，以此类推，就够成了实例于原型的链条，
+			这就是原型链的基本概念。

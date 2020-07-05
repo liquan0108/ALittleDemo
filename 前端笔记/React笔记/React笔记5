@@ -1,0 +1,26 @@
+es6模板字符串
+       {`${this.state.value1}/${this.state.value2}`}
+-----------------------------------------------------------------------------------------------------------	   
+react 解析html,将带标签的字符串解析成html标签:	   
+              dangerouslySetInnerHTML 属性 __html :  含标签的字符串
+           <p dangerouslySetInnerHTML={{ __html: value.content }}  />	   
+-----------------------------------------------------------------------------------------------------------	   
+重定向<Redirect />:	   
+     return <Redirect to={{ pathname: "/home" }} />;	   
+
+
+------------------------------------------------------------------------------------------------------------
+UI框架 Ant Design的使用:
+
+	1.cnpm install antd --save   安装antd
+	2.引入:
+		找到入口文件index.js引入的css样式文件,在文件的最上方(声明编码的下边)引入antd
+		  @import '~antd/dist/antd.css';
+	2.使用antd
+      查看官方文档
+	  注:最新版本的antd的Icon引入声明发生变化,详情看官网
+--------------------------------------------------------------------------------------------------------------
+antd的按需引入:
+    使用了 import { Button } from 'antd'; 的写法引入了 antd 下所有的模块，这会影响应用的网络性能。	  
+	注意：antd 默认支持基于 ES module 的 tree shaking，对于 js 部分，直接引入 import { Button } from 'antd' 也会有按需加载的效果。
+	      tree shaking(树木摇晃) 是一个术语,通常用于描述移除 JavaScript 上下文中的未引用代码(dead-code)。

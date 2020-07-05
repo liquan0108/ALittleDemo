@@ -1,0 +1,138 @@
+hook(钩子): 是react的一个api
+注意：
+	是 useState 而不是 userState！！！！！！！！！！！！！！！！！
+	
+	让无状态的组件可以使用状态。
+	1.引入userState
+		import {userState} from 'react'
+	2.在无状态组件中定义
+		let [val,setVal] = userState({
+			name:'小样板',
+			age:'25'，
+			sex:'男'
+		})
+		-----------------------------------
+		val为{                 相当于state
+			name:'小样板',
+			age:'25'，
+			sex:'男'
+		}
+		setVal   相当于 setState
+	3.在无状态组件中使用
+		
+		<p>{val.name}</p>
+		<p>{val.age}</p>
+		<p>{val.sex}</p>
+		
+		() => {
+			setVal(val.name = '王彦峰')
+		}
+-----------------------------------------------------------------
+redux 状态管理
+		是JavaScript提供的一个可预测
+		需求场景
+			某个组件的状态需要共享的时候
+			一个组件需要改变另外一个组件状态的时候
+			组件中的状态需要在任何地方都可以拿到
+	安装：
+		npm install --save redux
+		
+		
+		redux工作流程
+			首先声明action对象，定义reducer开关
+			定义reducer函数
+			创建store对象，引入并管理reducer
+			在组件中引入store和action并使用
+--------------------------------------------------------------------------------
+eject有什么用 react
+  作用：
+     在使用creat-react-app创建项目之后，我们是不能像vue脚手架创建得项目一样直观得看到webpack.config.js等文件，
+	 这时我们需要使用eject将这些配置文件暴露出来。
+	----------------------------------------------------------------------- 
+    在用creata-react-app脚手架构建react项目的完成时，会发现共有几个文件夹
+    其中：
+        1.node_modules是各个插件存放位置
+        2.public用于放置静态资源，里面的资源不会参与构建
+        3.src是源码文件，一般做开发就在这个文件夹，会参与打包构建
+    重点来了：
+            在package.json中：
+            只有三个依赖，分别是react，react-dom,react-scripts,依赖为什么这么少，
+            是因为像webpack，babel等等都是被creat react app封装到了react-scripts这个项目当中，
+            包括基本启动命令 都是通过调用react-scripts这个依赖下面的命令进行启动的，
+            creat react app搭建出来的项目默认支持这4种命令，start以开发模式启动项目，build将整个项目进行构建，
+            test进行测试，eject，会将原本creat react app对webpack，babel等相关配置的封装弹射出来，
+            如果我们要将creat react app配置文件进行修改，现有目录下是没有地方修改的，
+            此时，我们就可以通过eject命令将原本被封装到脚手架当中的命令暴露出来，然后就可以在项目的目录下看到很多配置文件。
+    建议：
+        脚手架构建react项目的完成后,首先执行npm run eject。否则需要推到git;
+
+        补救方法：
+        先git add .
+        然后git commit -m “init”
+        然后再npm run eject		
+--------------------------------------------------------------------------------------------------------
+config-overrides.js  文件的作用		
+	根目录定义加载按需打包的js配置模块
+----------------------------------------------------------------------------------------------------
+React中使用less
+		1.npm安装 less、 less-loader
+		2.webpack.config.js 中配置less 和 less模块化
+		3.config-overrides.js组合配置 css和less，使css和less都可以生效
+-------------------------------------------------------------------------------------------------------		
+封装自定义样式的antd组件
+		根目录下创建component
+		  src
+		     |component
+		       |NewButton
+				  |NewButton.js  创建类组件NewButton,按需引入组件，并导入自定义类样式(也可以和原生样式同名，
+								 同名自动引用样式，不在使用className引用样式。)； 
+									<Button className="button_new_sytle">{this.props.btnName}</Button>;
+				  |index.less
+----------------------------------------------------------------------------------------------------------
+样式组件
+		styled-components以组件的形式来声明样式，
+		
+		生成组件Button，该组件渲染之后是一个a标签,具有以下样式
+		export const Button = styled.a`
+			display: inline-block;
+		    border-radius: 3px;
+		    padding: 0.5rem 0;
+		    margin: 0.5rem 1rem;
+		    width: 11rem;
+		    background: transparent;
+		    color: white;
+            border: 2px solid white;
+------------------------------------------------------------------------------------------------		`
+CSS Modules	:让css更加可控，避免污染全局样式。
+
+		CSS Modules其实并不是官方的功能，而是项目在编译打包阶段来修改类名，替换对应的class，
+		实质上webpack打包时是依赖css-loader来进行处理，让CSS Modules生效的。
+		webpack.config.js
+			1.modules: 默认值为false；true表示开启CSS Modules
+			2.sourceMap：默认为false，不开启sourceMap; true开启sourceMap，开发环境下开启比较实用
+			3.getLocalIdent：默认为undefined，用function自定义生成的类名
+			4.localIdentName： 默认[path]___[name]__[local]___[hash:base64:5] ，可以自定义了类名的模板，可以进行适当修改
+
+---------------------------------------------------------------------------------------------------
+import 的花括号
+		使用 export default 导出的 不用{}包裹
+		直接使用 export const a = ..  导出的要用花括号
+----------------------------------------------------------------------------------------------------
+module.exports用法
+		module.exports 对象是由模块系统创建的。在我们自己写模块的时候，需要在模块最后写好模块接口，
+		声明这个模块对外暴露什么内容，module.exports 提供了暴露接口的方法。		
+		-------------------------------------------------------------------------------
+		暴露一个JSON Object
+		app.js文件：
+			var app = {
+				name: 'app',
+				version: '1.0.0',
+				sayName: function(name){
+					console.log(this.name);
+				}
+			}
+		module.exports = app;
+		------------------------------------------------------------------------------
+		其他文件调用方法：
+			var app = require('./app.js');
+			app.sayName('hello');//hello

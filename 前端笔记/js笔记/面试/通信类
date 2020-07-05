@@ -1,0 +1,27 @@
+通信类
+	什么是同源策略及限制。
+	同源：
+		协议 域名 端口号，三者有一个不同即为跨域。
+		
+	限制：
+		不是一个源的文档没有权利操作另一个源的文档。
+		无法操作 Cookie LocalStorage indeDB
+		无法对另一个源中的DOM进行操作
+		AJAX的请求不能发送
+		
+	前后端如何通信：
+		Ajax  同源策略下进行通信
+		WebSocket  不受是否同源的影响
+		CORS
+	如何创建Ajax：
+		XMLHttpRequest
+		兼容性处理
+		事件触发条件
+		事件触发顺序
+		
+		跨域通信的几种方式，实现原理
+			JSONP
+			Hash
+			postMessage
+			WebSocket
+			CORS

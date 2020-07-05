@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://www.jb51.net/article/123976.htm -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+
+<meta http-equiv="x-dns-prefetch-control" content="on">
+<link rel="dns-prefetch" href="https://img.jbzj.com/">
+<link rel="dns-prefetch" href="https://icws.jb51.net/">
+<link rel="dns-prefetch" href="https://files.jb51.net/">
+<meta name="applicable-device" content="pc">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta http-equiv="Cache-Control" content="no-transform">
+<title>基于js中的原型(全面讲解)_javascript技巧_脚本之家</title>
+<meta name="keywords" content="js原型">
+<meta name="description" content="下面小编就为大家带来一篇基于js中的原型(全面讲解)。小编觉得挺不错的，现在就分享给大家，也给大家做个参考。一起跟随小编过来看看吧">
+<link rel="alternate" media="only screen and(max-width: 640px)" href="https://m.jb51.net/article/123976.htm">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://m.jb51.net/article/123976.htm">
+<meta http-equiv="mobile-agent" content="format=xhtml; url=https://m.jb51.net/article/123976.htm">
+<script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/hm.js.下载"></script><script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/push.js.下载"></script><script type="text/javascript">
+var tougao="jingxian",lmname="JavaScript",suoyin="no";
+(function(){var reWriteUrl=function(url){if(url){var Splits=url.split("/"),siteName=window.location.pathname;if(typeof siteName!=="undefined"){return "https://m.jb51.net"+siteName}}};if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){var url=window.location.href;var pathname=window.location.pathname;if(url.indexOf("?pc")<0){try{window.location.href=reWriteUrl(url)}catch(e){}}}})();
+</script>
+<meta name="referrer" content="always">
+<link type="text/css" href="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/base.css" rel="stylesheet">
+<link type="text/css" href="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/common.css" rel="stylesheet">
+<link type="text/css" href="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/viewer.min.css" rel="stylesheet">
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/jquery.min.js.下载"></script>
+<script type="text/javascript">
+    if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='/skin/js/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+</script>
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/function.js.下载"></script> 
+</head>
+<body>
+<!--topTools Start -->
+<div id="topbar">
+    <div id="wrap">
+		<div class="topbarleft">
+			<a href="https://www.jb51.net/" target="_blank">脚本之家</a>
+			<a href="http://s.jb51.net/" target="_blank" rel="nofollow">服务器常用软件</a>
+		</div>
+		<div class="fr">
+			<ul>
+				<li><i class="ico-mobile"></i><a target="_blank" href="https://m.jb51.net/" rel="nofollow">手机版</a></li>
+				<li><i class="ico-contribute"></i><a href="http://tougao.jb51.net/" rel="nofollow" target="_blank">投稿中心</a></li>
+				<li id="wxHide"><i class="ico-wechat"></i><a href="javascript:void(0)" target="_blank">关注微信</a>
+					<div id="wxShow" class="wxHide_box"><img src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/erwm.jpg" alt="扫一扫" width="84" hight="84" data-baiduimageplus-ignore=""></div>
+				</li>
+			</ul>
+			<!--快捷导航 开始 -->
+			<div class="text_d right" id="navHide">
+				<a rel="nofollow" href="javascript:void(0);">快捷导航 <i class="arrowright"></i></a>
+				<div id="navBox" class="nwebnav">
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/softs/" target="_blank">软件下载</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/softs/android.html" target="_blank">android</a>
+								<a rel="nofollow" href="https://www.jb51.net/softs/mac.html" target="_blank">MAC</a>
+								<a rel="nofollow" href="https://www.jb51.net/qudong/" target="_blank">驱动下载</a>
+								<a rel="nofollow" href="https://www.jb51.net/fonts/" target="_blank">字体下载</a>
+								<a rel="nofollow" href="https://www.jb51.net/dll/" target="_blank">DLL</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/codes/" target="_blank">源码下载</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/codes/php.html" target="_blank">PHP</a>
+								<a rel="nofollow" href="https://www.jb51.net/codes/aspnet.html" target="_blank">ASP.NET</a>
+								<a rel="nofollow" href="https://www.jb51.net/codes/asp.html" target="_blank">ASP</a>
+								<a rel="nofollow" href="https://www.jb51.net/codes/jsp.html" target="_blank">JSP</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/list/index_84.htm" target="_blank">软件编程</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_85_1.htm" target="_blank">C#</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_134_1.htm" target="_blank">JAVA</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_159_1.htm" target="_blank">C 语言</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_206_1.htm" target="_blank">Delphi</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_233_1.htm" target="_blank">Android</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/list/index_1.htm" target="_blank">网络编程</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_15_1.htm" target="_blank">PHP</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_21_1.htm" target="_blank">ASP.NET</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_2_1.htm" target="_blank">ASP</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_3_1.htm" target="_blank">JavaScript</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="http://tools.jb51.net/" target="_blank">在线工具</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/tools/cssyasuo.shtml" target="_blank">CSS格式化</a>
+								<a rel="nofollow" href="http://tools.jb51.net/tools/js_geshihua.asp" target="_blank">JS格式化</a>
+								<a rel="nofollow" href="https://www.jb51.net/tools/html-js.htm" target="_blank">Html转化为Js</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/list/index_104.htm" target="_blank">数据库</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_112_1.htm" target="_blank">MYSQL</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_113_1.htm" target="_blank">MSSQL</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_154_1.htm" target="_blank">oracle</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_155_1.htm" target="_blank">DB2</a>
+								<a rel="nofollow" href="https://www.jb51.net/list/list_252_1.htm" target="_blank">MARIADB</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="https://www.jb51.net/cms/" target="_blank">CMS</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/cms/list411_1.html" target="_blank">PHPCMS</a>
+								<a rel="nofollow" href="https://www.jb51.net/cms/list408_1.html" target="_blank">DEDECMS</a>
+								<a rel="nofollow" href="https://www.jb51.net/cms/list578_1.html" target="_blank">帝国CMS</a>
+								<a rel="nofollow" href="https://www.jb51.net/cms/list419_1.html" target="_blank">WordPress</a>
+							</dd>
+						</dl>
+					</div>
+					<div class="ndeallist clear_fix">
+						<h4><a rel="nofollow" href="javascript:0;" target="_blank">常用工具</a></h4>
+						<dl>
+							<dd>
+								<a rel="nofollow" href="https://www.jb51.net/zt/phphuanjing.html" target="_blank">PHP开发工具</a>
+								<a rel="nofollow" href="https://www.jb51.net/zt/python.html" target="_blank">python</a>
+								<a rel="nofollow" href="https://www.jb51.net/zt/photoshopxz.html" target="_blank">Photoshop</a>
+								<a rel="nofollow" href="https://www.jb51.net/bibei/win/index.html" target="_blank">必备软件</a>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+			<!--快捷导航 结束 -->
+		</div>
+    </div>
+</div>
+<!--topTools end -->
+
+<div id="header">
+	<!-- Logo start -->
+	  <div id="logo"><a href="https://www.jb51.net/"><img src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/logo.gif" title="脚本之家" alt="脚本之家"></a></div>
+	  <div class="logom fl"><span id="logo_m" class="jbTestPos"></span></div>
+	  <div class="logor fr"><span id="logo_r" class="jbTestPos"></span></div>
+	<!--Logo end -->
+</div>	
+	<!--Logo end -->
+	
+	<!-- 导航开始 -->
+<div id="nav">
+	<ul>
+		<li><a href="https://www.jb51.net/">网站首页</a></li>
+		<li><a href="https://www.jb51.net/web/">网页制作</a></li>
+		<li><a href="https://www.jb51.net/list/index_1.htm">网络编程</a></li>
+		<li><a href="https://www.jb51.net/list/index_96.htm">脚本专栏</a></li>
+		<li><a href="https://www.jb51.net/jiaoben/">脚本下载</a></li>
+		<li><a href="https://www.jb51.net/list/index_104.htm">数据库</a></li>
+		<li><a href="https://www.jb51.net/list/list_82_1.htm">服务器</a></li>
+		<li><a href="https://www.jb51.net/books/">电子书籍</a></li>
+		<li><a href="https://www.jb51.net/os/">操作系统</a></li>
+		<li><a href="https://www.jb51.net/yunying/">网站运营</a></li>
+		<li><a href="https://www.jb51.net/pingmian/">平面设计</a></li>
+		<li><p><i>其它</i><span>
+			<a href="https://www.jb51.net/media/">媒体动画</a>
+			<a href="https://www.jb51.net/diannaojichu/">电脑基础</a>
+			<a href="https://www.jb51.net/hardware/">硬件教程</a>
+			<a href="https://www.jb51.net/hack/">网络安全</a>	
+		</span></p>
+		</li>
+	</ul>
+</div>
+	<!--导航结束-->
+
+
+<!-- 二级菜单开始 -->
+<div id="submenu">
+	<div class="subnav clearfix">
+<ul><li><a href="https://www.jb51.net/list/list_61_1.htm" title="基础知识">基础知识</a></li>
+<li><a href="https://www.jb51.net/list/list_23_1.htm" title="javascript类库">javascript类库</a></li>
+<li><a href="https://www.jb51.net/list/list_22_1.htm" title="表单特效">表单特效</a></li>
+<li><a href="https://www.jb51.net/list/list_18_1.htm" title="广告代码">广告代码</a></li>
+<li><a href="https://www.jb51.net/list/list_43_1.htm" title="网页特效">网页特效</a></li>
+<li><a href="https://www.jb51.net/list/list_26_1.htm" title="黑客性质">黑客性质</a></li>
+<li><a href="https://www.jb51.net/list/list_222_1.htm" title="javascript技巧">javascript技巧</a></li>
+<li><a href="https://www.jb51.net/list/list_232_1.htm" title="DOM">DOM</a></li>
+<li><a href="https://www.jb51.net/list/list_243_1.htm" title="node.js">node.js</a></li>
+<li><a href="https://www.jb51.net/list/list_248_1.htm" title="js其它">js其它</a></li>
+</ul>
+	</div>
+</div>
+<!-- 二级菜单结束 -->	
+
+<!--content Star -->
+<div id="wrapper">
+	<div id="container">
+		<div class="pt10 clearfix">
+			<div class="clearfix"><span id="tonglan1" class="jbTestPos"></span></div>
+		</div>
+	
+		<div class="clearfix">
+			<div class="breadcrumb">
+				<i class="ico-path"></i>您的位置：<a href="https://www.jb51.net/">首页</a> → <a href="https://www.jb51.net/list/index_1.htm" title="网络编程">网络编程</a> → <a href="https://www.jb51.net/list/list_3_1.htm" title="JavaScript">JavaScript</a> → <a href="https://www.jb51.net/list/list_222_1.htm" title="javascript技巧">javascript技巧</a> → js原型
+			</div>
+			<div class="search">
+			<form action="https://www.jb51.net/do/search.php" target="_blank">
+				<input type="hidden" name="s" value="10520733385329581432">
+				<input type="hidden" name="ie" value="gbk">
+				<input type="text" name="q" class="searchinput" placeholder="请输入关键词">
+				<input type="submit" value=" " class="search-button">
+			</form>
+			</div>
+		</div>
+	
+	   <div id="main" class="clearfix">
+		  <div class="main-left">
+			  <div id="article">
+			  		<h1 class="title">基于js中的原型(全面讲解)</h1>
+					<div class="info"> &nbsp;更新时间：2017年09月19日 08:07:18 &nbsp; 转载&nbsp;作者：铸剑师  &nbsp; </div>
+					<div class="lbd clearfix"><span id="tit_down" class="jbTestPos"></span></div>
+                    <div class="summary">下面小编就为大家带来一篇基于js中的原型(全面讲解)。小编觉得挺不错的，现在就分享给大家，也给大家做个参考。一起跟随小编过来看看吧</div>
+					<div class="lbd clearfix"><span id="art_up" class="jbTestPos"></span></div>
+					<div id="content">
+						<p>在讲js的原型之前，必须先了解下Object和Function。</p>
+<p>Object和Function都作为JS的自带函数，Object继承自己，Funtion继承自己，Object和Function互相是继承对方，也就是说Object和Function都既是函数也是对象。</p>
+<div class="jb51code">
+<div><div id="highlighter_51921" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">console.log(Function instanceof Object); // true</code></div><div class="line number2 index1 alt1"><code class="xhtml plain">console.log(Object instanceof Function); // true</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p>Object 是 Function的实例，而Function是它自己的实例。<br>
+</p>
+<div class="jb51code">
+<div><div id="highlighter_296453" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">console.log(Function.prototype); // &#402; () { [native code] }</code></div><div class="line number2 index1 alt1"><code class="xhtml plain">console.log(Object.prototype);&nbsp; // Object</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p><span style="color: #ff00ff"><strong>普通对象和函数对象</strong></span></p>
+<p>JavaScript中万物皆对象，但对象之间也是有区别的。分为函数对象和普通对象。</p>
+<p>函数对象可以创建普通对象，普通对象没法创建函数对象，普通对象JS世界中最低级的小喽啰，啥特权也没有。</p>
+<p>凡是通过new Function创建的对象都是函数对象，其他都是普通对象（通常通过Object创建），可以通过typeof来判断。</p>
+<div class="jb51code">
+<div><div id="highlighter_148227" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div><div class="line number9 index8 alt2">9</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">function f1(){};</code></div><div class="line number2 index1 alt1"><code class="xhtml plain">typeof f1 //"function"</code></div><div class="line number3 index2 alt2">&nbsp;</div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xhtml plain">var o1 = new f1();</code></div><div class="line number6 index5 alt1"><code class="xhtml plain">typeof o1 //"object"</code></div><div class="line number7 index6 alt2">&nbsp;</div><div class="line number8 index7 alt1"><code class="xhtml plain">var o2 = {};</code></div><div class="line number9 index8 alt2"><code class="xhtml plain">typeof o2 //"object"</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p>这边要注意的是下面这两种写法是一样的</p>
+<div class="jb51code">
+<div><div id="highlighter_879996" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">function f1(){};&nbsp; ==&nbsp; var f1 = new Function();</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<div class="jb51code">
+<div><div id="highlighter_168922" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">function f2(a,b){</code></div><div class="line number2 index1 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">alert(a+b);</code></div><div class="line number3 index2 alt2"><code class="xhtml plain">}</code></div><div class="line number4 index3 alt1">&nbsp;</div><div class="line number5 index4 alt2"><code class="xhtml plain">等价于</code></div><div class="line number6 index5 alt1">&nbsp;</div><div class="line number7 index6 alt2"><code class="xhtml plain">var f2 = new Function(a,b,"alert(a+b)");</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p>prototype、_proto_和construetor（构造函数）</p>
+<p><span style="color: #ff00ff"><strong>下面两句话也很重要</strong></span></p>
+<p>1、每一个函数对象都有一个prototype属性，但是普通对象是没有的；</p>
+<p>　 prototype下面又有个construetor，指向这个函数。</p>
+<p>2、每个对象都有一个名为_proto_的内部属性，指向它所对应的构造函数的原型对象，原型链基于_proto_;</p>
+<p></p>
+<p>好了,开始上代码和例子,建一个普通对象，我们可以看到</p>
+<p>　　1、o的确没有prototype属性</p>
+<p>　　2、o是Object的实例</p>
+<p>　　3、o的__proto__指向Object的prototype</p>
+<p>　　4、Object.prototype.constructor指向Object本身</p>
+<p>　　还可以继续往下延伸......</p>
+<div class="jb51code">
+<div><div id="highlighter_456775" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">var o = {};</code></div><div class="line number2 index1 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(o.prototype); //undefined</code></div><div class="line number3 index2 alt2"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(o instanceof Object); //true</code></div><div class="line number4 index3 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(o.__proto__ === Object.prototype) //true</code></div><div class="line number5 index4 alt2"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(Object === Object.prototype.constructor) //true </code></div><div class="line number6 index5 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(Object.prototype.constructor) //function Object()</code></div><div class="line number7 index6 alt2"><code class="xhtml plain">　　console.log(Object.prototype.__proto__); //null</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p><img alt="" width="514" height="291" style="widows: 1; text-transform: none; text-indent: 0px; letter-spacing: normal; font: medium Simsun; white-space: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/201709190805005.png"></p>
+<p>下面来一个函数对象，从下面的例子可以看出</p>
+<p>1、demo是函数对象，f1还是普通对象</p>
+<p>2、f1是Demo的实例</p>
+<p>3、demo的原型prototype的__proto__指向Object的原型prototype,而Object的原型prototyped的__proto__指向null;</p>
+<div class="jb51code">
+<div><div id="highlighter_883814" class="syntaxhighlighter  xhtml"><div class="toolbar"><span><a href="https://www.jb51.net/article/123976.htm#" class="toolbar_item command_help help">?</a></span></div><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="gutter"><div class="line number1 index0 alt2">1</div><div class="line number2 index1 alt1">2</div><div class="line number3 index2 alt2">3</div><div class="line number4 index3 alt1">4</div><div class="line number5 index4 alt2">5</div><div class="line number6 index5 alt1">6</div><div class="line number7 index6 alt2">7</div><div class="line number8 index7 alt1">8</div></td><td class="code"><div class="container"><div class="line number1 index0 alt2"><code class="xhtml plain">function Demo(){};</code></div><div class="line number2 index1 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">var f1 = new Demo();</code></div><div class="line number3 index2 alt2"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(f1.prototype); //undefined</code></div><div class="line number4 index3 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(f1 instanceof Demo); //true</code></div><div class="line number5 index4 alt2"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(f1.__proto__ === Demo.prototype); //true</code></div><div class="line number6 index5 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(Demo === Demo.prototype.constructor) ;//true</code></div><div class="line number7 index6 alt2"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(Demo.prototype.__proto__ === Object.prototype) ;//true</code></div><div class="line number8 index7 alt1"><code class="xhtml spaces">&nbsp;&nbsp;</code><code class="xhtml plain">console.log(Object.prototype.__proto__); //null</code></div></div></td></tr></tbody></table></div></div>
+<div class="codetool" id="codetool"><a href="javascript:;" class="selall" title="全选当前html代码"></a><a href="javascript:;" class="copy" title="复制当前html代码"></a><div class="code_n"><textarea></textarea></div></div></div>
+<p><img alt="" width="338" height="111" style="widows: 1; text-transform: none; text-indent: 0px; letter-spacing: normal; font: medium Simsun; white-space: normal; color: rgb(0,0,0); word-spacing: 0px; -webkit-text-stroke-width: 0px" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/201709190805006.png"></p>
+<p><span style="color: #ff00ff"><strong>原型链</strong></span></p>
+<p>javascript中，每个对象都会在内部生成一个proto 属性，当我们访问一个对象属性时，如果这个对象不存在就回去proto 指向的对象里面找，一层一层找下去，这就是javascript原型链的概念。</p>
+<p>f1.__proto__ ==&gt; Demo.prototype ==&gt; Demo.prototype.__proto__ ==&gt; Object.prototype ==&gt; Object.prototype.__proto__ ==&gt; null</p>
+<p><strong>JS中所有的东西都是对象,所有的东西都由Object衍生而来, 即所有东西原型链的终点指向null</strong></p>
+<p>以上这篇基于js中的原型(全面讲解)就是小编分享给大家的全部内容了，希望能给大家一个参考，也希望大家多多支持脚本之家。</p>
+                        
+                        <div class="art_xg">
+                        <h4>您可能感兴趣的文章:</h4><ul><li><a href="https://www.jb51.net/article/105637.htm" title="JS原型与原型链的深入理解" target="_blank">JS原型与原型链的深入理解</a></li><li><a href="https://www.jb51.net/article/105090.htm" title="js 原型对象和原型链理解" target="_blank">js 原型对象和原型链理解</a></li></ul>
+                        </div>
+						<div class="lbd_bot clearfix">
+						<span id="art_bot" class="jbTestPos"></span>
+						</div>
+					</div><!--endmain-->
+					<div class="tags clearfix">
+						<i class="icon-tag"></i>
+						<ul class="meta-tags">
+						  <li class="tag item"><a href="http://common.jb51.net/tag/js/1.htm" target="_blank" title="搜索关于js的文章" rel="nofollow">js</a></li>
+<li class="tag item"><a href="http://common.jb51.net/tag/%E5%8E%9F%E5%9E%8B/1.htm" target="_blank" title="搜索关于原型的文章" rel="nofollow">原型</a></li>
+
+						</ul>
+					</div>
+					<div class="lbd clearfix">
+						<span id="art_down" class="jbTestPos"></span>
+					</div>
+					<div id="shoucang"></div>
+					<div class="xgcomm clearfix">
+						<h2>相关文章</h2>
+						<ul><li class="lbd clearfix"><span id="art_xg" class="jbTestPos"></span></li><li><div class="item-inner"><a href="https://www.jb51.net/article/113757.htm" title="JavaScript制作简单的框选图表" class="img-wrap" target="_blank"> <img alt="JavaScript制作简单的框选图表" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg0.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/113757.htm" title="JavaScript制作简单的框选图表">JavaScript制作简单的框选图表</a></p><div class="item-info"><div class="js">这篇文章主要为大家详细介绍了JavaScript制作一个简单的框选图表，具有一定的参考价值，感兴趣的小伙伴们可以参考一下</div><span class="lbtn" style="float:right"> 2017-05-05 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/114335.htm" title="JS实现上传图片实时预览功能" class="img-wrap" target="_blank"> <img alt="JS实现上传图片实时预览功能" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg1.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/114335.htm" title="JS实现上传图片实时预览功能">JS实现上传图片实时预览功能</a></p><div class="item-info"><div class="js">这篇文章主要介绍了JS实现上传图片实时预览功能,非常不错，具有参考借鉴价值，需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2017-05-05 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/100065.htm" title="js实现获取鼠标当前的位置" class="img-wrap" target="_blank"> <img alt="js实现获取鼠标当前的位置" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg2.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/100065.htm" title="js实现获取鼠标当前的位置">js实现获取鼠标当前的位置</a></p><div class="item-info"><div class="js">本文主要介绍了利用javascript实现获取鼠标当前的位置的具体方法，具有很好的参考作用，需要的朋友可以看看</div><span class="lbtn" style="float:right"> 2016-12-12 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/185738.htm" title="JS数组Reduce方法功能与用法实例详解" class="img-wrap" target="_blank"> <img alt="JS数组Reduce方法功能与用法实例详解" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg3.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/185738.htm" title="JS数组Reduce方法功能与用法实例详解">JS数组Reduce方法功能与用法实例详解</a></p><div class="item-info"><div class="js">这篇文章主要介绍了JS数组Reduce方法功能与用法,结合实例形式详细分析了JS数组Reduce方法操作数组统计、去重等相关操作技巧,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2020-04-04 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/40651.htm" title="JS返回上一页实例代码通过图片和按钮分别实现" class="img-wrap" target="_blank"> <img alt="JS返回上一页实例代码通过图片和按钮分别实现" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg4.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/40651.htm" title="JS返回上一页实例代码通过图片和按钮分别实现">JS返回上一页实例代码通过图片和按钮分别实现</a></p><div class="item-info"><div class="js">返回上一页的方法有很多，本代码通过图片和按钮分别实现，感兴趣的朋友可以参考下，希望对大家有所帮助</div><span class="lbtn" style="float:right"> 2013-08-08 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/186116.htm" title="JavaScript cookie原理及使用实例" class="img-wrap" target="_blank"> <img alt="JavaScript cookie原理及使用实例" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg5.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/186116.htm" title="JavaScript cookie原理及使用实例">JavaScript cookie原理及使用实例</a></p><div class="item-info"><div class="js">这篇文章主要介绍了JavaScript cookie原理及使用实例,文中通过示例代码介绍的非常详细，对大家的学习或者工作具有一定的参考学习价值,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2020-05-05 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/155377.htm" title="JS温故而知新之变量提升和时间死区" class="img-wrap" target="_blank"> <img alt="JS温故而知新之变量提升和时间死区" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg6.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/155377.htm" title="JS温故而知新之变量提升和时间死区">JS温故而知新之变量提升和时间死区</a></p><div class="item-info"><div class="js">这篇文章主要给大家介绍了关于JS温故而知新之变量提升和时间死区的相关资料，文中通过示例代码介绍的非常详细，对大家的学习或工作具有一定的参考学习价值，需要的朋友们下面随着小编来一起学习学习吧</div><span class="lbtn" style="float:right"> 2019-01-01 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/75236.htm" title="js实现简单计算器" class="img-wrap" target="_blank"> <img alt="js实现简单计算器" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg7.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/75236.htm" title="js实现简单计算器">js实现简单计算器</a></p><div class="item-info"><div class="js">一个简洁的网页JS计算器，附详细代码释义。通过下边的效果演示就可以看到，这是一个挺小的js网页计算器，界面美化的我想还是不错的，毕竟在没有使用任何图片修饰的情况下，很好看，而且功能挺实用，可以完成基本的数学算数运算。</div><span class="lbtn" style="float:right"> 2015-11-11 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/179884.htm" title="如何基于javascript实现贪吃蛇游戏" class="img-wrap" target="_blank"> <img alt="如何基于javascript实现贪吃蛇游戏" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg8.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/179884.htm" title="如何基于javascript实现贪吃蛇游戏">如何基于javascript实现贪吃蛇游戏</a></p><div class="item-info"><div class="js">这篇文章主要介绍了如何基于javascript实现贪吃蛇游戏,文中通过示例代码介绍的非常详细，对大家的学习或者工作具有一定的参考学习价值,需要的朋友可以参考下</div><span class="lbtn" style="float:right"> 2020-02-02 </span></div></div></div></div></li>
+<li><div class="item-inner"><a href="https://www.jb51.net/article/99649.htm" title="基于JavaScript实现随机颜色输入框" class="img-wrap" target="_blank"> <img alt="基于JavaScript实现随机颜色输入框" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/bcimg9.png"> </a><div class="rbox"><div class="rbox-inner"><p><a class="link title" target="_blank" href="https://www.jb51.net/article/99649.htm" title="基于JavaScript实现随机颜色输入框">基于JavaScript实现随机颜色输入框</a></p><div class="item-info"><div class="js">这篇文章主要介绍了基于JavaScript实现随机颜色输入框的实例代码，代码简单易懂，非常不错，需要的朋友参考下吧</div><span class="lbtn" style="float:right"> 2016-12-12 </span></div></div></div></div></li>
+</ul>
+					</div>
+					<div class="lbd clearfix mt5">
+						<span id="art_down2" class="jbTestPos"></span>
+					</div>
+					<a href="https://www.jb51.net/article/123976.htm#comments"></a>
+					<div id="comments">
+						<h2>最新评论</h2>
+						<div class="pd5"><div id="SOHUCS" sid="art_123976"></div></div>
+					</div>
+				  </div><!--endborder-->
+			  </div><!--end fl-->
+		  
+			<div class="main-right">
+				<div id="sidebar-right">
+					<div class="r300 clearfix"><span id="side_up" class="jbTestPos"></span></div>
+                    <div class="sidebox-recomm">
+						<a class="style02" href="https://www.jb51.net/os/win10/698746.html" target="_blank">
+							<div class="title"><strong>站长推荐</strong></div>
+							<div class="tj_ico2"></div>
+							<h2>正版 Windows 10</h2>
+							<p>正版Windows 10 家庭/专业版，操作系统限时抢购[￥<span>1088</span>→<i>￥248</i>]</p>
+						</a>
+						<a class="style01" href="https://www.jb51.net/news/699009.html" target="_blank">
+							<div class="title"><strong>站长推荐</strong></div>
+							<div class="tj_ico"></div>
+							<h2>正版 Office 软件</h2>
+							<p>Microsoft Office 2016/2019/365 正版最低价仅需[<i> ￥148元</i>]</p>
+						</a>
+</div>
+					<div class="sidebox bor-blue">
+						<div class="bor-default pb10">
+							<h4 class="blue">大家感兴趣的内容</h4>
+                            <ul class="newsList newList-in">
+							<li><em class="no1">1</em><a href="https://www.jb51.net/article/14397.htm" title="js刷新页面方法大全" target="_blank">js刷新页面方法大全</a></li><li><em class="no2">2</em><a href="https://www.jb51.net/article/35535.htm" title="JS中setTimeout()的用法详解" target="_blank">JS中setTimeout()的用法详解</a></li><li><em class="no3">3</em><a href="https://www.jb51.net/article/42482.htm" title="JS截取字符串常用方法详细整理" target="_blank">JS截取字符串常用方法详细整理</a></li><li><em class="no4">4</em><a href="https://www.jb51.net/article/25403.htm" title="js页面跳转常用的几种方式" target="_blank">js页面跳转常用的几种方式</a></li><li><em class="no5">5</em><a href="https://www.jb51.net/article/35691.htm" title="JS打开新窗口的2种方式" target="_blank">JS打开新窗口的2种方式</a></li><li><em class="no6">6</em><a href="https://www.jb51.net/article/52038.htm" title="js数组与字符串的相互转换方法" target="_blank">js数组与字符串的相互转换方法</a></li><li><em class="no7">7</em><a href="https://www.jb51.net/article/64330.htm" title="JS设置cookie、读取cookie、删除cookie" target="_blank">JS设置cookie、读取cookie、删除</a></li><li><em class="no8">8</em><a href="https://www.jb51.net/article/134312.htm" title="JS删除数组里的某个元素方法" target="_blank">JS删除数组里的某个元素方法</a></li><li><em class="no9">9</em><a href="https://www.jb51.net/article/43136.htm" title="js 将json字符串转换为json对象的方法解析" target="_blank">js 将json字符串转换为json对象的</a></li><li><em class="no10">10</em><a href="https://www.jb51.net/article/24101.htm" title="javascript深入理解js闭包" target="_blank">javascript深入理解js闭包</a></li>
+                            </ul>
+						</div>
+					</div>
+					<div class="r300 clearfix mt10"><span id="idctu" class="jbTestPos"></span></div>
+					<div class="sidebox bor-blue">
+						<div class="bor-default pb10">
+							<h4 class="blue">最近更新的内容</h4>
+                            <ul class="newsListA">
+							<li><a href="https://www.jb51.net/article/161375.htm" title="Django模板继承 extend标签实例代码详解" target="_blank">Django模板继承 extend标签实例代码详解</a></li><li><a href="https://www.jb51.net/article/114500.htm" title="js编写选项卡效果" target="_blank">js编写选项卡效果</a></li><li><a href="https://www.jb51.net/article/6069.htm" title="添加一个以前写的table的spliter给大家" target="_blank">添加一个以前写的table的spliter给大家</a></li><li><a href="https://www.jb51.net/article/120398.htm" title="微信小程序 rich-text的使用方法" target="_blank">微信小程序 rich-text的使用方法</a></li><li><a href="https://www.jb51.net/article/100864.htm" title="JS实现超简单的汉字转拼音功能示例" target="_blank">JS实现超简单的汉字转拼音功能示例</a></li><li><a href="https://www.jb51.net/article/100204.htm" title="浅谈JavaScript的自动垃圾收集机制" target="_blank">浅谈JavaScript的自动垃圾收集机制</a></li><li><a href="https://www.jb51.net/article/99429.htm" title="Bootstrap基本组件学习笔记之进度条(15)" target="_blank">Bootstrap基本组件学习笔记之进度条(15)</a></li><li><a href="https://www.jb51.net/article/101852.htm" title="通过BootStrap-select插件 js jQuery控制select属性变化" target="_blank">通过BootStrap-select插件 js jQuery控制</a></li><li><a href="https://www.jb51.net/article/154737.htm" title="js删除数组中某几项的方法总结" target="_blank">js删除数组中某几项的方法总结</a></li><li><a href="https://www.jb51.net/article/21027.htm" title="JS 实现双色表格实现代码" target="_blank">JS 实现双色表格实现代码</a></li>
+                            </ul>
+						</div>
+					</div>
+					<div class="r300 clearfix mt10">
+						<span id="idctu1" class="jbTestPos"></span>
+					</div>
+                    <div class="sidebox bor-blue">
+						<div class="bor-default pb10">
+							<h4 class="blue">常用在线小工具</h4>
+							<ul class="newsListA"><span id="bctools" class="jbTestPos"></span></ul>
+						</div>
+					</div>
+					<div class="r300 clearfix mt10"><span id="idctu2" class="jbTestPos"></span></div>
+					<div class="mt10 rFixedBox" style="position: fixed; top: 0px;">
+						<div class="r300 clearfix"><span id="r2gg" class="jbTestPos"></span></div>
+						<div class="r300 clearfix mt10">
+							<span id="rbbd" class="jbTestPos"></span>
+						</div>
+					</div>
+				  </div>
+			  </div><!--end fr-->
+		  </div>
+	  </div>
+	  <!--share start-->
+	 <div id="right-share" style="display: block;">
+		<div class="right-share jb-share" id="jb-share">
+			<a class="rshare-weixin" title="">微信</a>
+			<a rel="nofollow" class="rshare-qzone" target="_blank" href="http://tougao.jb51.net/" title="投稿">投稿</a>
+			<a rel="nofollow" class="rshare-tsina2" target="_blank" href="http://tools.jb51.net/" title="在线工具">在线工具</a>
+		</div>
+		<a class="rshare-top2" onclick="javascript:;"></a>
+		<div id="weixin-code" class="hide">
+		<div class="popup_weixin_head"><p>关注微信公众号</p> 
+		<div id="code"><img src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/erwm.jpg" alt="扫一扫" width="100" hight="100"></div>
+		</div>
+		</div>	
+	 </div>
+	<!--share end-->
+
+</div><!--end content-->
+<div id="footer">
+	<div class="footer-bottom">
+		<p>
+			<a rel="nofollow" href="https://www.jb51.net/about.htm" target="_blank">关于我们</a> - 
+			<a rel="nofollow" href="https://www.jb51.net/support.htm" target="_blank">广告合作</a> - 
+			<a rel="nofollow" href="https://www.jb51.net/linkus.htm" target="_blank">联系我们</a> -  
+			<a rel="nofollow" href="https://www.jb51.net/sm.htm" target="_blank">免责声明</a> -  
+			<a rel="nofollow" href="https://www.jb51.net/sitemap.htm" target="_blank">网站地图</a> - 
+			<a rel="nofollow" href="tencent://message/?uin=461478385&amp;Site=https://www.jb51.net" target="_blank">投诉建议</a> - 
+			<a rel="nofollow" href="https://www.jb51.net/up.htm" target="_blank">在线投稿</a>
+		</p>
+		<p>&#169;CopyRight 2006-2020 JB51.Net Inc All Rights Reserved. 脚本之家 版权所有</p>
+	</div>
+</div><!--end footer-->
+<link type="text/css" rel="stylesheet" href="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/shCore.css">
+<link type="text/css" rel="Stylesheet" href="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/shThemeDefault.css">
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/shHighlighter.js.下载"></script>
+<script type="text/javascript"> 
+/*更多导航*/
+$("#nav p").hover(function(){$(this).addClass("hover")},function(){$(this).removeClass("hover")});
+if (top.location != self.location)top.location=self.location;
+var varwindow=$(window);
+$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 800 && !$(this).hasClass("nohref")){
+            img.style.width = "800px";
+            img.style.height = "auto";
+          }
+    });
+ $(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = varwindow.height();
+        var top = varwindow.scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+330)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			$('.rFixedBox').css({'position':'fixed','top': 0});
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+	   
+	   /*右侧快捷菜单*/
+	   sideFixed();
+    });
+	
+	var ww = varwindow.width();
+	function sideFixed(){
+	var scrolltop = document.body.scrollTop || document.documentElement.scrollTop;
+	var a1 = 550;
+	if(ww>440){
+		if(a1<=scrolltop){
+			$('#right-share').slideDown();
+			}
+		else{
+			$('#right-share').slideUp();
+			}
+		}
+	}
+	$('.rshare-weixin').hover(function(){
+			$('#weixin-code').removeClass('hide');
+		},function(){
+			$('#weixin-code').addClass('hide');
+		});
+	/*二维码*/
+	$('#right-share .rshare-top2').on('click',function(){
+        $('html,body').animate({'scrollTop':0},500);
+    });
+if(suoyin=="ok"){
+	GenerateContentList();
+}
+
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+
+var ourl="http://www.cnblogs.com/jiangshichao/archive/2017/09/18/7545829.html";
+
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/viewer.min.js.下载"></script>
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/arc2019.js.下载"></script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<!--右侧浮动临时增加-->
+<script>jbLoader();</script><script class="closetag">jbLoader(true);</script>
+<div id="tongji">
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/tongji.js.下载"></script><script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/stat.php" language="JavaScript"></script><script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/stat(1).php" language="JavaScript"></script>
+</div>
+<script type="text/javascript">
+if ('undefined' == typeof(window.Viewer)) {
+        document.write(unescape("%3Cscript src='/skin/js/viewer.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+var viewer = new Viewer(document.getElementById('content'));
+//tu+
+var cpro_id = "u1893014";
+document.write('<scri'+'pt src="//cpro.baidustatic.com/cpro/ui/i.js" type="text/javascript"></s'+'cript>');
+(function(){
+var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?2f793ca9dd6f4c32488903eed5c7fbcb":"https://jspassport.ssl.qhimg.com/11.0.1.js?2f793ca9dd6f4c32488903eed5c7fbcb";
+document.write('<script src="' + src + '" id="sozz"><\/script>');
+})();
+</script><script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/i.js.下载" type="text/javascript"></script><script src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/11.0.1.js.下载" id="sozz"></script><script charset="utf-8" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/ab77b6ea7f3fbf79.js.下载"></script> 
+<script type="text/javascript" src="./基于js中的原型(全面讲解)_javascript技巧_脚本之家_files/pl.asp.下载"></script>
+<script type="application/ld+json">
+        {
+            "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+            "@id": "https://www.jb51.net/article/123976.htm",
+            "appid": "1549322409310619",
+            "title": "基于js中的原型(全面讲解)",
+            "description": "下面小编就为大家带来一篇基于js中的原型(全面讲解)。小编觉得挺不错的，现在就分享给大家，也给大家做个参考。一起跟随小编过来看看吧",
+            "pubDate": "2017-09-19T08:07:18",
+			"upDate": "2017-09-19T08:07:18"
+        }
+</script>
+
+
+<!-- published at 2020/5/21 10:55:27By dxycms qq:461478385  -->
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>

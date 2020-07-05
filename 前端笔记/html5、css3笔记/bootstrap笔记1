@@ -1,0 +1,28 @@
+bootstrap简介：
+	Bootstrap 是一个用于快速开发 Web 应用程序和网站的前端框架。Bootstrap 是基于 HTML、CSS、JAVASCRIPT 的。
+	移动设备优先：自 Bootstrap 3 起，框架包含了贯穿于整个库的移动设备优先的样式。
+	浏览器支持：所有的主流浏览器都支持 Bootstrap。
+	容易上手：只要您具备 HTML 和 CSS 的基础知识，您就可以开始学习 Bootstrap。
+	响应式设计：Bootstrap 的响应式 CSS 能够自适应于台式机、平板电脑和手机。
+bootstrap使用：
+	文档类型设置：
+		需要将页面设置为 HTML5 文档类型。
+		<!DOCTYPE>
+		<html lang='en'>
+	为了确保适当的绘制和触屏缩放，需要在 <head> 之中添加 viewport 元数据标签。
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- 引入 Bootstrap -->
+		<link href="文件路径" rel="stylesheet">
+容器布局：
+	.container 类用于响应式布局，会被媒体查询控制最大宽度。
+	.container-fluid 类用于页面100%宽度，占据全部视口（viewport）的容器。媒体查询未控制最大宽度。
+
+
+
+
+
+
+
+
+
+

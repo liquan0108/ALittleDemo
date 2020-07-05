@@ -1,0 +1,39 @@
+  css新特性：
+	一、：root 自定义变量
+		1.变量：
+			:root {}声明全局 CSS 变量，不一定非要在：root中声明，
+			其他选择器中也可以声明变量。   
+			<style>
+			// root下定义变量
+				：root{
+					--color:red;
+					--width:100px;  // 要有单位，否则不生效
+					--number:100;
+				}
+			//	var（）使用
+				div{
+					
+					background-color:var(--color);
+					width:var(number);
+				}
+			</style>
+		2.计算：
+			div{
+				width:var(--number * 1px);
+			}
+		3.默认值
+			div{
+				font-size:var(--size, 16px);    // --size找不到时，使用16px
+			}
+	二、shape环绕文字（需要上一个兄弟浮动配合）		
+		1.shape-outside:;
+			 none           默认
+			 border-box		环绕边框
+			 margin-box		环绕外边距
+			 padding-box	环绕内边距
+			 content-box	环绕内容
+		2.shape-margin:;  环绕空隙
+	三、scrollbar。 自定义滚动条样式。
+		::-webkit-scrollbar
+		::-webkit-scrollbar-thumb     滚动条里面的小方块
+		::-webkit-scrolbar-track      滚动条的轨道

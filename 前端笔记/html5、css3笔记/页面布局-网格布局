@@ -1,0 +1,77 @@
+1.左右宽度固定中间自适应
+	一、float左右浮动，中间不浮动且左右外边距等于浮动元素的宽度，
+	二、display：flex； 主轴方向左对齐（justify-content: start），中间宽度百分比
+	三、position: absolute;绝对定位，左：left：0; 右：right：0;中间左右外边距等于浮动元素的宽度（或中间也绝对定位，left、right等于宽度）
+	四、表单形式
+	五、网格布局
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	网格布局：
+		display:grid;
+				父盒子中的子盒子挨个排到形成的单元格中。	
+		父属性：
+			定义网格行：
+				grid-template-rows:repeat(行数,每行的大小);    每行/列的大小可以设置成比例形式。单位为fr，表示剩余空间做等分。
+				或者
+				grid-template-rows:大小，大小，大小，大小。。; 	几个“大小”等于有几行，并对应相应的大小
+			定义网格列：
+				grid-template-columns:repeat(列数,每列的大小);	
+				或者
+				grid-template-columns:大小，大小，大小，大小。。;几个”大小“等于有几列，并对应相应的大小
+			
+			划分区域（合并单元格）。 a1 为一个区域；a2为一个区域；a3为一个区域。注意各个区域只能形成矩形。
+				grid-template-areas:         注意一行包在一个引号里边
+					'a1 a1 a1'
+					'a2 a2 a3'
+					'a2 a2 a3'
+				;
+				给每个区域绑定一个盒子
+					  div:nth-of-type(1) {
+						grid-area: a1;
+					  }
+					  div:nth-of-type(2) {
+						grid-area: a2;
+					  }
+					  div:nth-of-type(3) {
+						grid-area: a3;
+					  }
+			网格间距：
+				row-gap: 20px;   行间距
+				column-gap: 20px;  列间距
+			对齐方式：
+				 
+				align-content: center;  - 有多余空间时，沿着纵轴对齐网格项内的内容-----父属性
+			 
+				align-items: center; - 有多余空间时，沿着纵轴对齐网格项内的内容-----父属性
+				
+				align-self: center; - 有多余空间时，沿着纵轴对齐网格项内的内容-----子属性
+				==========================================================
+				justify-items – 有多余空间时，沿着行轴对齐网格项内的内容-----父属性
+
+				justify-content – 有多余空间时，此属性沿着行轴对齐网格-----父属性
+
+				justify-self – 有多余空间时，沿着行轴对齐网格项内的内容-----子属性
+		子属性：
+			定位盒子所占位置(左边和顶边 分别从1开始数，)
+				grid-row-start: 1;
+				grid-row-end:2 ;
+				grid-column-start:3 ;
+				grid-column-end: 4 ;
+				
+			简写： grid-area;1/3/2/4;
+		

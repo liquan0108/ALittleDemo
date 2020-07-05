@@ -1,0 +1,90 @@
+		每次修改代码后还需要重新打包，生成新的代码。很是麻烦
+		在日常开发中，我们不可能每次修改一次代码就执行一次构建，我们需要一个方便本地开发的工具，和 webpack 配套的则是 webpack-dev-server。
+	开发服务器 devServer：用来自动化（自动编译，自动打开浏览器，自动刷新浏览器），不属于5个核心概念。
+	
+	使开发者专注代码，不用再繁琐的手动编译打包。
+	特点： 只会在内存中编译打包，不会有任何输出。
+第一步：需要下载包（npm install webpack-dev-server）
+	
+第二步：  
+   配置开发服务器 devServer：
+	const { resolve } = require("path");
+	const HtmlWebpackPlugin = require("html-webpack-plugin");
+	module.export ={
+	entry: './index',
+	output: {
+		filename: 'bundle.js',
+		path: resolve(__dirname,'build')
+	
+	},
+	module:{
+		rules:[
+			{
+			test:/\.css$/,
+			use:['sytle.loader','css.loader']
+			},{
+				test: /\.(jpg|png|gif)$/,
+				loader: "url-loader",
+				options: {
+				  limit: 8 * 1024,
+				  esModule: false,
+				  // 修改输出图片的路径，入口所在的文件夹中的imgs文件夹。（在options中添加outputPath）
+				  outputPath: "imgs",
+				},
+		]
+		
+	},
+	还需要一个「index.html」文件作为页面的基础，webpack 暂时没有能力来处理 html 文件（需要通过插件来处理），
+	plugins:{
+	
+		plugins: [new HtmlWebpackPlugin({ template: "./index.html" })],
+	
+	},
+	mode:'develpoment',
+	devServer：{
+		// 运行项目的目录，构建后的目录。
+			contentBase：resolve(_dirname, 'build'),
+			// 启动gzip压缩
+			compress: true,
+			// 开发服务器的端口号
+			port: 3000
+			// 打开本地默认浏览器
+			open：true
+		},
+}
+第三步：
+	启动 devServer指令为：npx webpack-dev-server (’-‘中间无空格)；
+
+
+注意：
+	使用 npx webpack-dev-server 启动，只会在内存中编译打包，不会有任何输出文件（如：build/bundle.js、img、png。。。），并且会启动开发服务器 devServer。。
+	使用 webpack 打包，则会正常生产输出文件。并且不会启动开发服务器 devServer。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

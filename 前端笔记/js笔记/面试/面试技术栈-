@@ -1,0 +1,111 @@
+
+jQuery
+	用过的，简历上有使用经历，源码（核心架构是什么？事件委托是怎么做的？插件机制是什么？看jQuery源码的博客浏览量高的过一
+
+遍。）
+
+
+
+
+一、页面布局
+
+二、css盒模型：
+	基本概念：标准模型和IE模型，他们的区别，如何设置这两种模型，如何获取设置盒模型	的宽高，盒模型边距重叠，BFC(边距重叠解决方案)。
+
+	1.他们的区别：宽高计算范围不同。
+	2.如何设置这两种模型：
+			box-sizing: content-box;默认
+			box-sizing:border-box;
+
+	3.如何获取设置盒模型的宽高：
+		dom.style.width/height; 只能拿到内联样式的宽高，可能不准确。
+		dom.currentStyle.width/height; 拿到渲染的宽高，比较准确。  IE支持
+		window.getComputedStyle（null，dom）width/height; 其他浏览器支持
+		dom.getBoundingClientRect().width/height
+	4.盒模型边距重叠：
+		
+
+	5.BFC（块级格式化上下文）
+		原理（规则）
+		1、在一个BFC中，两个相邻的块级盒子的垂直外边距会产生折叠
+		2、bfc的区域不会与浮动的box重叠
+		3、bfc在页面上是独立的容器，外边的元素不会影响里边的元素，里边的元素也不会影响外边的元素。
+		4、bfc在高度计算时会考虑子元素的高度，即使子元素浮动了。（清除浮动）
+	6.创建bfc：
+		    浮动元素 float 不为 none 的;
+			绝对定位元素 position 为 absolute / fixed 的;
+			display 不为 block 的, 如 flex, inline-flex, inline-block, table-cell, table-caption 等;
+			overflow 不为 visible 的.
+			--------------------------------------------------------------------------------------------
+			浮动元素
+			绝对定位元素
+			非块级盒子的块级容器（如 inline-blocks, table-cells, 和 table-captions）
+			overflow 值不为“visiable”的块级盒子
+			
+			
+三、DOM事件
+		DOM事件的级别、DOM事件的模型（冒泡和捕获）、DOM事件流、描述DOM事件捕获的具体流程、Event对象常见应用、自定义事件
+		
+		DOM事件的级别：
+			DOM0：(只能绑定几个不同的事件，绑定相同的事件会被后者覆盖)
+				element.onclick = function(){}
+				
+			DOM2:(可绑定相同/不同的事件，然后顺序执行，不会覆盖。)
+				element.addEventListener('click',function(){},false)  // 为true则代表使用事件捕获模式，false则表示使用事件冒泡模式。
+			
+			DOM3:
+				element.addEventListener('keyup',function(){},false)
+				
+				 只是事件类型增加了很多。
+			
+		DOM事件的模型：
+			捕获：
+				事件捕获的概念，与事件冒泡正好相反。它认为当某个事件发生时，父元素应该更早接收到事件，具体元素则最后接收到事件。
+				是从上往下到达目标元素。
+			冒泡：
+				事件冒泡即事件开始时，由最具体的元素接收（也就是事件发生所在的节点），然后逐级传播到较为不具体的节点。
+				是从当前元素，也就是目标元素往上到window。
+				事件是由最具体的元素接收，然后逐级向上传播，在每一级的节点上都会发生，直到传播到document对象，向Chrome这样的浏览器会冒泡到window 对象
+		
+		DOM事件流：（事件流所描述的就是从页面中接受事件的顺序。）
+			DOM事件流包括三个阶段。
+
+				第一阶段、事件捕获阶段:
+							也就是说，当事件发生时，首先发生的是事件捕获，为父元素截获事件提供了机会。
+				第一阶段、处于目标阶段:
+							事件到了具体元素时，在具体元素上发生。
+				第一阶段、事件冒泡阶段：
+							从具体元素，在到window对象。
+		
+		描述DOM事件捕获的具体流程：
+				首先window接收，然后给document，再然后html ->body，在一层层传到目标元素。
+				
+				冒泡事件的流程与之相反：从目标元素一层层往上到window。
+				
+				
+		Event对象常见应用：
+				event.preventDefault();   阻止默认事件
+				event.stopPropagation();  阻止冒泡
+				event.stoplmmediatePropagation();   阻止同一个元素另一个相同事件的触发。事件响应优先级。
+				event.currentTarget;  当前绑定的事件
+				event.target;   当前被点击的元素
+
+		自定义事件：
+			var eve = new Event('custome');
+				ev.addEventL istener('custome ',function(){
+				console.log( custome');
+				});
+			ev.dispatchEvent(eve);
+----------------------------------------------------------------------------------
+事件处理程序：
+	响应事件的函数就是事件处理程序。比如click是事件名称，加上"on"开头，事件处理程序是onclick，有以下几种方式来给事件指定事件处理程序。
+	1、HTML 事件处理程序
+		其实就是，HTML 的on属性。
+	2、DOM0 级事件处理程序
+	
+	3、DOM2 级事件处理程序
+		addEventListener()和removeEventListener()，用于添加和删除事件处理程序。
+	
+	4、IE 事件处理程序
+		（1）事件绑定监听函数：attachEvent(eventType, listener)
+		（2）事件移除监听函数：detachEvent(eventType, listener)

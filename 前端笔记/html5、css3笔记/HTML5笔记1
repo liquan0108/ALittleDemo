@@ -1,0 +1,132 @@
+HTML5 = HTML + CSS + JavaScriptAPI
+
+-----------------------------------------------------------------------------
+HTML5中多的东西
+
+	1.标签：（更加语义化的标签如：<header><nav><footer>）
+		为什么要有语义化标签：便于阅读和写代码；让浏览器或是网络爬虫解析，从而更好分析其中的内容。
+		
+		DataList（数据列表） //不常用
+		Progress（进度条）  // 读完时value = 1
+		Meter（数值显示器）
+------------------------------------------------------------------------------------
+svg：
+	可缩放矢量图形（无论怎么放大都是高清的，而且体积小质量高，效果好，可控程度高）
+	引入svg：
+		<iframe src="demo.svg" frameborder="0"></iframe>
+----------------------------------------------------------------------------------
+新选择器:
+	返回第一个满足选择器条件的元素
+		document.querySelector(selector);
+	返回所有满足选择器条件的元素（数组）
+		document.querySelectorAll(selector);
+--------------------------------------------------------------------------------
+操作样式：	
+	element.classList
+		.classList属性返回的是一个数组，只读。但是可以使用add（“类名/样式”）和remove（“类名/样式”）方法修改它。
+		.toggle(class, true|false)(切换类名/样式)
+		
+		document.querySelector("li").classList.add("red");
+		
+		document.querySelector(".blue").classList.remove("blue");
+
+		document.querySelectorA1l("li")[2].classList.toggle("green");
+
+--------------------------------------------------------------
+ 自定义属性：
+	<!--规范:
+		1.data-开头
+		2. data-后必须至少有一个字符，多个单词使用-连接
+		建议:
+		1.名称应该都使用小写--不要包含任何的大写字符
+		2.名称中不要有任何的特殊符号
+		3.名称不要副作用纯数字
+	--> 
+	<p data-school-name="itcast">传智播客</p>
+	<!--
+		获取自定义属性值
+		将data-后面的单词使用驼峰命名法连接:必须使用驼峰合法法获取值否则有可能无法获
+		取到值
+	--> 
+
+	var value=document.querySelector("p").dataset["schoolName"];//data-school-name 
+
+--------------------------------------------------------------
+
+访问历史
+	window.history()
+	-------------------------------------------------------
+	伪造访问历史：（分享链接来定位到要分享的内容区域中）
+	1.首先进行编码	
+		let encode = decodeURI(val);		//进行解码，防止浏览器自动编码,val：存进历史记录的数据
+	2.判断浏览器是否兼容window.history并写入到pustState
+		if(window.history && window.history.pushState){
+			window.history.pushState(encode,'历史','#abc='+encode);   //三个参数 ：数据  标题(都没实现)  地址(可选)
+		}
+    3.监听前进，后退的按钮
+		window.onpopstate = function(e) {
+				if(e.state){
+					con.innerHTML = data[e.state];//e.state：历史的记录数据
+				}
+			}
+-------------------------------------------------------
+全屏api：
+		
+----------------------------------------------------------
+ Service workers ：离线访问
+		
+-------------------------------------------------------------------
+新特性
+	1.localStorage //用来作为本地存储
+		存：
+		if(window.localStorage){  // 判断兼容性
+			localStorage.setItem(key:value)
+			}
+		取：
+		if(window.localStorage){  // 判断兼容性
+			localStorage.getItem(key);
+			}
+	2.sessionStorage
+		同上
+---------------------------------------------------------------------
+文件Api
+	<input typw="file" />
+	
+	可设置自定义按钮，然后在点击自定义按钮时触发<input type="file"/>上传按钮
+
+
+
+
+		
+id 名用下划线，class 名用 - 分割；		
+		
+		
+FLASH
+
+
+
+
+
+
+伪对象，
+
+
+
+
+
+
+
+
+
+
+ajax：异步无刷新，
+
+
+
+
+
+
+
+
+
+

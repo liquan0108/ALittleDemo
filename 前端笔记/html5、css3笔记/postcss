@@ -1,0 +1,37 @@
+Postcss
+	PostCSS本身是一个功能比较单一的工具。它提供了一种方式用JavaScript代码来处理CSS。
+	利用PostCSS可以实现一些工程化的操作,如:自动添加浏览器前缀，代码合并,代码压缩等。
+	常见插件:
+		autoprefixer         生成浏览器前缀
+		postcss-import       合并css文件
+		cssnano               压缩css文件
+		postcss-cssnext		  给新出的css降级，适应低级浏览器
+		stylelint             用来规范css代码
+		postcss-sprites       生成精灵图
+-------------------------------------------------------------------------------------
+	手动转化
+		1.安装：
+			cnpm install postcss-cli -g
+		2.	postcss src/css文件路径 -o dist/css文件路径 -w
+		3. 使用插件
+			3.1安装插件
+			npm ...
+			3.2在根目录下创建 postcss.config.js文件，开始配置
+				文件中引入插件
+				const autoprefixer =require('autoprefixer');
+				
+				module.exports = {
+					plugins:[
+						autoprefixer({
+							browsers:['>0%']
+						}),
+						cssnext,
+					]
+				}
+
+	webpack:
+		1. 安装：postcss、postcss-loader
+		2. 配置一下webpack.config.js
+		3.在根目录下配置postcss.config.js
+
+

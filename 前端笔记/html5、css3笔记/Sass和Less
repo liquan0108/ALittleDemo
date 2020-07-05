@@ -1,0 +1,259 @@
+Sass和Less
+	Sass和Less都属于CSS预处理器，CSS预处理器定义了一种新的语言, 其基本思想是，用种专]的编程语言,为CSS增加了一-些编程的特性,
+	如:变量、语句、函数、继承等概念。将CSS作为目标生成文件，然后开发者就只要使用这种语言进行CSS的编码工作。
+注释：
+	Sass和Less的单行不会编译，多行注释会编译出去，
+变量：
+	变量值:
+		Sass采用$符号定义变量值。 
+			$number: 100px;
+			div{
+				width:$number;
+			}
+		Less采用@符号定义变量值。
+			@number:100px;
+			div{						div{
+				width:@number;		=>		width:100px;
+			}							}
+	变量名：
+		Sass:
+			$i:1;
+			$key:padding;
+		使用：
+			.div#{$1}{					.div1{
+				#{$key}:50px;		=>			padding:50px;
+			}							}
+	差值：(上面的示例着重于使用变量来控制CSS规则中的值，但是它们也可以在其他地方使用，例如选择器名称，属性名称，URL和@import语句。)
+		Less采用@符号定义变量名。
+			@i:1;
+			@key:padding;
+		使用：(使用时采用变量差值的写法)
+				.div@{i}{					.div1{
+					@{key}:50px;	=>			padding:50px;
+				}							}
+				---------------------url---------------------------
+				@images: "../img";
+
+					body {
+					  color: #444;
+					  background: url("@{images}/white-sand.png");
+					}
+				
+作用域：(通用)两次定义变量时，使用变量的最后定义，从当前作用域向上搜索。
+	 Less变量的作用域会找当前区域，若找不到则在外边找。（后声明的会覆盖先声明的）
+		@number: 999px;
+		.div{											.div{
+			  @number: 100px;（先声明）
+			  width: @number; （使用变量）			=>			width: 1px;
+			  @number: 1px;（后声明）
+		}												}
+		@number: 666px;		
+				
+	Sass变量的作用域只会在使用之前的位置找。若找不到则无法转义。			
+		$number: 999px;
+		.div{											.div{
+			  $number: 100px;（先声明）
+			  width: $number; （使用变量）			=>			width: 100px;
+			  $number: 1px;（后声明）
+		}												}		
+				
+嵌套：(通用)
+	.test {													.test {
+		height: 100px;												height: 100px;
+		p {														}
+		  background-color: red;           =>				.test p{
+		}															background-color: red;
+		img {													}
+		  display: block;									.test img{
+		}															 display: block;
+    }															}
+				
+	伪类嵌套：(嵌套的选择器之间默认空格隔开，即后代选择器。使用伪类选择器时用 & 符号消除空格。& 表示当前选择器的父级)
+		ul{										ul:hover{	
+			&:hover{	
+				color:red;           =>					color:red;
+			}
+		}										}
+				
+	属性嵌套：（仅Sass支持）
+
+		div{												div{
+			font : {												font-size:10px;
+				size:10px;											font-family:'宋体';	
+				family:'宋体';							=>
+			}													}
+		}
+		
+	@规则嵌套和冒泡：
+		@ 规则（例如 @media 或 @supports）可以与选择器以相同的方式进行嵌套。@ 规则会被放在前面，
+		同一规则集中的其它元素的相对顺序保持不变。这叫做冒泡（bubbling）。
+		.component {
+			  width: 300px;
+			  
+			  @media (min-width: 768px) {
+			  
+					width: 600px;
+					
+					@media  (min-resolution: 192dpi) {
+						background-image: url(/img/retina2x.png);
+					}
+			  }
+			  
+			  @media (min-width: 1280px) {
+				width: 800px;
+			  }
+		}
+
+		编译为：
+
+		.component {
+		  width: 300px;
+		}
+		------------------------------------------------------------
+		@media (min-width: 768px) {
+		  .component {
+			width: 600px;
+		  }
+		}
+		----------------------------------------------------------
+		@media (min-width: 768px) and (min-resolution: 192dpi) {
+		  .component {
+			background-image: url(/img/retina2x.png);
+		  }
+		}
+		---------------------------------------------------------
+		@media (min-width: 1280px) {
+		  .component {
+			width: 800px;
+		  }
+		}
+		-----------------------------------------------------------
+运算：
+	Less中：
+	加、减或比较之前会进行单位换算。如果单位换算无效或失去意义，则忽略单位。无效的单位换算例如：px 到 cm 或 rad 到 % 的转换。
+		// 所有操作数被转换成相同的单位
+		@number1: 5cm + 10mm; // 结果是 6cm
+		@number2: 2 - 3cm - 5mm; // 结果是 -1.5cm
+		
+	乘法和除法不作转换。
+		@num:20px;
+		div{
+			width:@num * 10;     => width:200px; （单位以被乘数为准）
+			height:10em + @num;  => height:30em; 
+		}
+	Sass中：
+		单位不同不能运算。
+				
+				
+转义：
+	允许你使用任意字符串作为属性或变量值。任何 ~"anything" 或 ~'anything' 形式的内容都将按原样输出，
+				
+		padding:~'(100/5)';		 =>      padding:(100/5); 而不是 padding:20;
+				
+	在 Less 3.5+ 版本中，许多以前需要“引号转义”的情况就不再需要了。
+
+函数：
+	内置函数 round(3.4px)  random() 等....
+	
+		width:round(3.4px);   =>  width: 3px;
+		width:random();   => 产生一个随机数
+	
+	自定义函数：(仅Sass)
+		@function 函数名($a,$b){
+			@return $a + $b;
+		}
+		
+		
+混合（Mixins）：一种将一组属性从一个规则集包含（或混入）到另一个规则集的方法。（仅有类选择器和id选择权可以使用）。
+	Less：
+		.class{							.class(){   // Less加上括号（Sass前边加%，如 %div{...}）不会编译输出该样式，即生成的css文件中没有 .class 样式。
+			color:red;		另一种写法 		color:red;
+		}								}
+		#idtest{
+			font-size:14px;
+			.a-style{
+				height:100px;
+			}
+		}
+		
+		div{								div{
+			.class();   		    =>        color:red;
+			#idtest();      		=>        font-size:14px;
+			#idtest.a-style()		=>			height:100px;  
+		}									}
+	Sass：
+		@mixin show{       (不传参)
+			display:block;
+		}
+		@mixin hidden($data){      (传参)
+			display:$data;
+		}
+		.id{
+			@include:show;
+			@include:hidden(hidden);
+		}
+		
+继承：
+	Less:
+		#id1 {
+		  background-color: red;
+		}
+
+		#id2 {
+		  &:extend(#id1);
+		}
+		
+		生成：
+			#id1,#id2 {
+				  background-color: red;
+				}
+				
+	Sass：
+		#id2 {
+		  @extend #id1；
+		}
+		
+		生成：
+			#id1,#id2 {
+				  background-color: red;
+				}
+				
+属性合并：
+	Less:
+		div{                      
+			border+: 1px;
+			border+: solid;            =>合并生成   border: 1px, solid, red;
+			border+: red;
+		}
+		
+条件：
+	Less：
+		 定义变量；
+		 @count:3;
+		 拿到传入变量，并判断
+		 .get(@cn) when (@cn >4) {
+				width:400px;
+		 }
+		 
+		 .box{
+			调用判断方法并传值
+			.get(@count)
+		 }
+		 
+	Sass:
+		$count:4;
+		
+		.box{
+			@if($count >3){
+				width:999px:
+			}
+			@else {
+				width:0px;
+			}
+		}
+		
+引入Less/Sass文件：
+	@import './../.. .less'
+	@import './../.. .sass'
+	
+	会将其他less/sass中的样式复制到当前less/sass文件中

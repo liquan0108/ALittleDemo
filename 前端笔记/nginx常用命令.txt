@@ -1,0 +1,19 @@
+taskkill /IM  nginx.exe  /F  关闭所有进行
+验证配置是否正确: nginx -t
+配置文件修改重装载命令：nginx -s reload
+
+
+nginx.conf配置文件
+location / {
+            #代理本地文件夹
+            # root F:/index.html;
+            # autoindex on;
+
+            root   F:/new;
+            index  index.html index.htm;
+        }
+
+注意：
+	结尾有分号
+	root路径支持 文件夹 和 / 符号
+	index的第二个为文件类型为 htm  

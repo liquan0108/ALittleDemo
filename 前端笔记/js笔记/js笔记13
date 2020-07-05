@@ -1,0 +1,78 @@
+对象:
+	包含属性和方法的;
+	
+	声明对象:
+		1. var obj = new Object();
+		
+		2.var obj = {};   // 推荐
+			
+	---------------------------------------------------------------------------------	
+	例:
+	function createObj(name,age) {
+		var obj = {};
+		obj.name = name;
+		obj.age = age;
+		obj.showAge = function(){
+			alert(name)
+		}
+		obj.showName = function(){
+			alert(age)
+		}
+		return obj;
+	}	
+		
+		var obj = createObj("小样板",25);
+		
+		console.log(obj.name);
+		obj.showAge();
+		
+	------------------------------------------------------------------------------------------------------------
+	构造函数:
+		就是一个普通对象,但是内部使用了this变量,对构造函数使用new运算符,就能生成实例,并且this变量会绑定在实例对象上,
+		例:
+		function Person(name,age) {
+			this.name = name;
+			this.age = age;
+			this.showAge = function(){
+				alert(name)
+			}
+			this.showName = function(){
+				alert(age)
+			}
+		}	
+		
+		var demo = new Person("刘德华",18)
+		
+		console.log(demo,name);
+		console.log(demo,age)
+		demo.shoeName();
+	-----------------------------------------------------------------------------------------------------------
+	prototype 原型:
+		可以给某类添加某个方法;
+		
+		Array.prototype.run = function{  // 给数组添加了run方法, 只要是数组都能访问该方法
+				alert("lalalala")
+		}
+		
+		var arr = [];
+		arr.run();  //  lalalala
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

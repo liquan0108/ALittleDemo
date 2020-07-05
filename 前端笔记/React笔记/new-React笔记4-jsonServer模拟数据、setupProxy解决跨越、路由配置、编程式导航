@@ -1,0 +1,111 @@
+json-server： 模拟数据
+	1.安装json-server：
+		cnpm install json-server -g
+	  安装 axios 请求数据
+		cnpm install --svae axios
+	2.创建文件 mock 并新建.json文件，写入虚拟数据。
+	3.启动： cd 进入mock文件件下，终端输入json-server json文件 --port 4000
+		拓展：
+			在package.json中配置启动项
+				找到scripts，在其中加入
+					“mock”："json-server json文件路径 --port 端口号  --watch"
+				例如：	
+					“mock”："json-server ./src/mock/test.json --port 4000  --watch"
+	4.组件中引入axios来发送请求
+	5.访问数据
+		get请求
+		axios.get('http://localhost:端口号/').then((data) => {
+				
+		})
+--------------------------------------------------------------------------
+解决跨域：
+	正向代理：(开发环境)
+		开发环境一个位于客户端和目标服务器之间的代理服务器，为了获取到目标服务器的内容，客户端向代理服务器发送一个请求
+		代理服务器帮助我们去目标服务器里边获取数据并返回给我们
+
+		vscode全局搜索 proxy。找到后设置proxy，
+			
+		  proxy: {
+		  '/api': {
+			target: 'https://api.apiopen.top/getJoke?page=1&count=2&type=video',
+			changeOrigin: true,
+			pathRewrite: {  //防止出现  https://api.apiopen.top/getJoke?page=1&count=2&type=video/api  情况
+			  '^/api': '/'
+			}
+		  }
+		},
+		-------------------------------------------------------------------------
+		以后开发环境请求如果以 /api 前缀，才会走代理，
+			比如： axios.get('/api').then((data) =< {})    
+					等于
+				   axios.get('https://api.apiopen.top/getJoke?page=1&count=2&type=video').then(() => {})
+		--------------------------------------------------------------------------------------------------------------			   
+		★将代理迁移到setupProxy.js中(proxy代理匹配多个url)
+			1.安装http-proxy-middleware
+					cnpm install http-proxy-middleware
+			2.在src下建立setupProxy.js文件
+			3. 配置setupProxy.js文件
+				const proxy = require("http-proxy-middleware");
+	 //最新要求 const { createProxyMiddleware } = require("http-proxy-middleware");
+				module.exports = function(app) {
+				  app.use(
+					proxy("/api", {       
+ // createProxyMiddleware("/api", {   最新要求
+					  target: 'https://api.apiopen.top/getJoke?page=1&count=2&type=video',
+					  changeOrigin: true, 
+					  pathRewrite: {
+						"^/api": ""
+					  }
+					})
+				  );
+				  app.use(
+					proxy("/back", {
+					  target: 'https://api.apiopen.top/getJoke?page=1&count=2&type=video',
+					  changeOrigin: true, 
+					  pathRewrite: {
+						"^/api": ""
+					  }
+					})
+				  );
+				  ...
+				};
+	---------------------------------------------------------------------------------------------------------------------			
+	反向代理：(线上环境)
+		可以通过代理服务器来接受网络上的请求连接，然后将这个请求转发给内部的网络服务器上 
+		并且把这个服务器上得到的数据返回给请求的客户端这个时候代理服务器对外的表现就是一个反向代理。
+		(需要后端配置)
+---------------------------------------------------------------------------
+路由配置：
+	安装
+		npm install --save react-router-dom
+	路由模式：
+		哈希模式 		HashRouter    带#号， 刷新时页面不会丢失
+		历史纪录模式 	BrowserRouter 没有#号，通过历史记录进行路由切换，刷新会丢失，本地模式不会。
+	2.index.js引入路由模块
+	
+	3.路由模式包裹根组件
+		ReactDOM.render(<HashRouter><App></HashRouter>,document.getElementById('root'))
+	或
+		ReactDOM.render(<BrowserRouter><App></BrowserRouter>,document.getElementById('root'))
+		
+	4. App组件中设置路由跳转
+		
+		跳转：（Link/NavLink）
+			<Link to='/home'>点击跳转路径</Link>
+			NavLink，会添加一个样式
+			<NavLink to='/home>点击跳转路径</NavLink>
+		路径匹配：
+			<Switch> // Switch 确保唯一渲染，多个相同的组件只渲染一个
+				exact属性，精准匹配
+				<Route exact path='/' component={Root}/>
+				<Router path='/home' component={Home}/>
+			<Switch>
+--------------------------------------------------------------------------------------------------------------------------
+高阶组件withRouter,
+(实现编程式导航)
+		作用是将一个组件包裹进Route里面, 然后react-router的三个对象history, location,
+		match就会被放进这个组件的props属性中.
+		1.引入withRouter
+			import {withRouter} from 'react-router-dom'
+		2.通过事件进行跳转
+			<button	onClick={() => {props.history.push('/home')}}>跳转</button>

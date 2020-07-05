@@ -1,0 +1,36 @@
+网页布局扩展
+	等高布局（一个高度改变，另一个跟着变。）
+		1.使用负margin-bottom隐藏盒子
+		2.设置一定的padding-bottom
+		3.父盒子隐藏溢出 overflow:hidden;
+		4.给子盒子添加内容后，另一个子盒子高度随之改变。
+	三列布局（左右固定，中间自适应）
+		1.定位
+		2.浮动（双飞翼布局、圣杯布局）
+		3.flex弹性布局
+		4.bfc布局
+			
+		
+		双飞翼布局：
+			
+		  <div id="header">#header</div>
+			  <div id="内容盒子">
+			  
+				<div id="内容区域" class="column">
+				  <div class="content">#center</div>
+				</div>
+					
+				
+				<div id="左侧区域" class="column">#left</div>
+				
+				<div id="右侧区域" class="column">#right</div>
+				
+			  </div>
+		  <div id="footer">#footer</div>
+		-------------------------------------------------------------------------------
+		1.内容盒子中的子元素都左浮动。
+		2.左、右侧区域宽度固定。
+		3.内容区域 宽度设为100%。此时左右侧被挤下去。
+		4.左侧区域的左边距设为负100%。         margin-left:-100%
+		5.右侧区域的右边距设为负的自身宽度。   margin-left:-自身宽度；
+		

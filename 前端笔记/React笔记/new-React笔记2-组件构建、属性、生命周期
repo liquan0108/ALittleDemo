@@ -1,0 +1,47 @@
+组件中的重要内容
+	构建方式: 组件名首字母要大写
+		1.无状态组件(函数组件)
+			function Zujian(){
+				return(<div>
+					Hello World!!
+				</div>)
+			}
+		2.类组件
+			class Zj extends React.Component {
+				render() {
+				  return <div>Hello World!!!!</div>;
+					}
+			}
+	组件属性
+		props组件对外的接口，可以接收父组件给子组件的数据传递
+		  父组件自定义属性，然后给属性赋值进行传递	
+			少量数据
+				let name = '小样板'
+				<Zujian name={name} />
+			大量数据
+				let obj = {name:'小样板',age:'25',sex:'男'}
+				<Zujian {...obj} />
+		  子组件
+			1.无状态子组件使用形参接收数据
+			  function Zujian(props){
+				return <div>{props.name}</div>
+			  } 
+			2.类组件使用 this.props接收数据
+			  class Zujian extends React.Component{
+				
+				render(){
+					return(
+						<div>{this.props.name}</div>
+					)
+				}
+			  }
+		-----------------------------------------------------------------
+		默认值：
+		Zujian.defaultProps = {
+			name:'暂无信息'     
+		}
+		传值类型：
+		Zujian.PropTypes = {
+			name: PropTypes.String     // PropTypes.数据类型
+		}
+	生命周期

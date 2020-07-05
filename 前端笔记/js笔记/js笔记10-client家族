@@ -1,0 +1,124 @@
+client家族:
+	1.clientWidth/clientHeight  
+	 获取网页可视区域宽、高。
+	 调用者不同，意义不同。调用者为div时，代表盒子本身宽、高。调用者为body/html时，代表可视区域宽、高
+
+	2.clientX/clientY  鼠标距离可视区域距离
+				通过event 调用,event.clientX
+
+	3.clientTOP/clientLeft  盒子的border
+-----------------------------------------------------------------------------------------------------------------------
+使用client家族:
+	1.监听窗口改变事件:
+		window.onresize = function (){
+			...
+		}
+
+	
+	3.封装client
+		根据浏览器不同来适配:
+		function client () {
+			if(window.innerWidth !=null){
+				return {
+					width: window.innerWidth,
+					height: window.innerHeight
+				}
+			}else if(document.compatMode === "CSS1Compat"){
+				return {
+					width: document.documentElement.clientWidth,
+					height: document.documentElement.clientHeight
+				}
+			} else {
+				return {
+					width: document.body.clientWidth,
+					height: document.body.clientHeight
+				}
+			}
+		}
+-------------------------------------------------------------------------------------------------------------------------------
+响应式布局:
+	一、js响应式布局
+		1.监听可视区域大小
+			resize();   // 首先加载判断一下初始化时用的样式
+			window.onresize = resize;  // 监听可视区域
+			function resize(){
+				//根据大小设置link标签引入的样式
+			}
+		2.根据大小设置link标签引入的样式
+			if(宽小于500px){
+					var src_css = document.getElementById()
+						src_css.href = "移动端.css"
+			} else {
+			
+					
+			}
+	二、media查询
+----------------------------------------------------------------------------------------------------------------------
+冒泡:
+	事件冒泡:当一个元素上的事件被触发的时候，比如说鼠标点击了一个按钮，
+	同样的事件将会在那个元素的所有祖先元素中被触发。这一过程被称为事件冒泡;
+	这个事件从原始元素开始- -直冒泡到DOM树的最上层。
+	但是不是所有的事件都冒泡,如: blur,focus,load(异步 不冒泡),unload,mouseenter,mouseleave,abort,error(异步 不冒泡)
+	------------
+	冒泡顺序:
+		ie6:
+			div > body > html > document
+		其他浏览器:
+			div > body > html > document >window
+	-----------------------------------------------------------------------------------------------------------------
+	阻止冒泡:
+		其他浏览器/w3c标准:
+			event.stopPropagation()
+		ie浏览器:
+			event.cancelBubble = true
+		封装阻止冒泡方法:
+		 var event = window.event || event;
+         if (event.stopPropagation) {
+            event.stopPropagation();
+          } else {
+            event.cancelBubble = true;
+          }
+	-----------------------------------------------------------------------------------------------------------------------
+	案例:
+		一、点击空白区域隐藏表单/弹窗
+			核心:
+			document.onclick = function () {
+			  var event = window.event || event;
+			  
+			  console.log(event); // 获取事件对象的所有内容
+			  console.log(event.target.id); // 从事件对象中找到唯一识别标志 > 拿到点击元素的id
+			  
+			  console.log(event.srcElement.id);  // ie浏览器中拿到唯一识别标志
+			  var targetId = event.target? event.target.id : event.srcElement.id;
+			  if (event.target.id != "login") {  // 单击除表单外的其他位置时
+				shade.style.display = "none"; // 隐藏遮罩和表单
+				login.style.display = "none";
+				document.body.style.overflow = "visible"; // 溢出部分 = 可见,来显示全部内容
+			  }
+			};
+		二、选中文字时气泡显示
+			核心:
+				拿到选中的值:
+				document.selection.createRange().text; IE9以下使用
+				window.getSelection().toString(); 其他浏览器使用
+			
+			封装:
+				var txt = window.getSelection?window.getSelection():document.selection.createRange().text;
+				console.log(text);  //显示对象;	
+				alert(txt) ;		//显示内容
+				
+-------------------------------------------------------------------------------
+ document.body.style.overflow = "hidden"; // 只留下当前可视区域的内容,最多显示一屏,来实现隐藏滚动条
+
+ document.body.style.overflow = "visible";  // 溢出部分 = 可见,来显示全部内容
+
+
+
+------------------------------------------
+所有字符串都是真,空字符串为假,
+所有数值都是真,0 为假
+
+
+
+
+

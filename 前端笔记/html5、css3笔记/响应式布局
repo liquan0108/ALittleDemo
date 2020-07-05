@@ -1,0 +1,67 @@
+ 媒体类型：
+	all     所有类型
+	print   打印设备
+	screen	电脑平板智能手机
+	speech	屏幕阅读器
+	
+	and、not、
+	min-width、max-width、
+	orientation:portrait、orientation:landscape  纵屏、横屏
+	<link>
+	
+	
+	@media all and (min-width:500px) {   匹配所有设备，并且屏幕宽度大于等于500时使用样式
+		选择器 {
+					样式。。。
+				}
+	}
+	
+	@media all and (min-width:300px) and (max-width: 500px) {   匹配所有设备，屏幕宽度大于300且小于500时触发
+		选择器 {
+					样式。。。
+				}
+	}
+	@media not all (min-width:500px) {   取反，即屏幕宽度小于500时使用
+		选择器 {
+					样式。。。
+				}
+	}
+	
+	@media all and (orientation:portrait) {   纵屏时触发该样式
+		选择器 {
+					样式。。。
+				}
+	}
+	
+	@media all and (orientation:landscape){   横屏时触发该样式
+		选择器 {
+					样式。。。
+				}
+	}
+	根据媒体查询的匹配条件来引入外部样式
+	<link href= '../..../.css' media = 'all and (min-width:500px)'> 
+	
+	自动响应式：
+		类名选择器要写成相同的类名
+	
+	手动式：
+		各种宽度都对应的一种类名，然后然后在元素上手动添加
+	
+	
+常见修改样式：
+	display
+	float
+	width
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

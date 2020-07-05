@@ -1,0 +1,31 @@
+##2. jQuery的重点
++ 2.1 jQuery入口函数(全球都会)
++ 2.2 jQuery的选择器(其实就是CSS的选择器)
++ 2.3 jQuery的Dom操作
++ 2.4 jQuery的样式操作
++ 2.5 jQuery的动画
++ 2.6 jQuery的事件处理
+------------------------------------------------------------
+## 3.jQuery的入口函数
+	html文档加载完成后就开始jquery
++ 3.1语法
+jQuery( document ). read(function(){ });
+* $(function(){ });I/
+* $ === jQuery // $是jQuery全局函数的别名。
+
+
+
+
+
+
+
+
+
+
+浏览器下载完页面之后就开始从上往下解析执行，遇到要加载的其他文件时（如：css、js文件），则开一个线程开始加载文件，
+此时浏览器会继续往下解析页面，直到解析完成。解析完成后就开始执行jQuery入口函数。比window.onload（页面全部加载完成才会执行）快
+
+
+dom树： 层级结构
+
+文档的加载顺序、和window.onload、$(document).ready() 加载顺序

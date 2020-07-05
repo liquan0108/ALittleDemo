@@ -1,0 +1,100 @@
+reac中没有提供专门的请求数据模块,但是我们可以使用任何第三方请求模块实现请求数据
+1.axios获取服务器数据 (axios不支持fetch-jsonp)
+	
+          1、安装axios模块npm install axios  --save   /  cnpm install axios  --save
+
+          2、在哪里使用就在哪里引入import axios from 'axios'
+                测试api:  var api='http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20';
+		  3、看文档使用
+onClick = () =>{                                     onClick = () =>{  
+	axios                                               axios
+      .get(api)                                             .get(api)
+      .then(response => {                                   .then(function(response) {        
+        this.setState({                                        this.setState({                     //此时this的指向是当前的function
+          liValur: response.data.result                              liVAlue: response.data.result
+        });                                                    )};
+      })                                                     })
+      .catch(function(error) {                               .catch(function(error) {
+        console.log("出错", error);                                 console.log("出错",error)
+      })                                                      })
+      .finally(function() {                                  .finally(function() {
+        console.log("总是执行");                                console.log("总是执行");
+      });                                                     });
+}                                                    }
+2.fetch-jsonp获取服务器数据
+	1、安装fetch-jsonp模块 cnpm install fetch-jsonp --save
+	2、在哪里使用就在那里引入 import fetchJsonp from 'fetch-jsonp'
+	3、看文档使用 www.npmjs.com  搜索 fetch-jsonp
+	
+	onClick = () => {
+	 fetchJsonp('url').then().then().catch()
+	}
+ 
+------------------------------------------------------------------------------------------------------------------------
+跨域，是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略造成的，是浏览器对JavaScript实施的安全限制。
+
+     首先狭义的同源就是指，域名、协议、端口均为相同。
+		http://www.yyy.cn/index.html 调用 http://www.xxxyyy.cn/server.php 非跨域
+
+		http://**www.xxxyyy.cn**/index.html 调用  http://**www.xxx.cn**/server.php  跨域,主域不同
+
+		http://**abc**.xxxyyy.cn/index.html 调用  http://**def**.xxx.cn/server.php  跨域,子域名不同
+
+		http://www.xxx.cn:**8080**/index.html 调用  http://www.xxx.cn/server.php  跨域,端口不同
+
+		**https**://www.xxx.cn/index.html 调用  **http**://www.xxx.cn/server.php  跨域,协议不同
+------------------------------------------------------------------------------------------------------------------------
+生命周期函数:
+  组件加载时的生命周期函数:
+	constructor (props){
+			super(props);
+			console.log('首先初始化')
+		}
+		
+	componentWilMount(){  // 01组件将要挂载
+		console.log('01')
+	}	
+	
+	componentDidMount(){   // 03组件加载完成
+		console.log('03')
+	}
+	render(){               // 02渲染组件
+		console.log('02')
+
+	return(
+		<div> 
+			....
+		</div>
+	)
+	------------------------------------------------------------------------------------------------------------------------
+	更新数据时的生命周期函数:
+	react的componentWillReceiveProps周期是存在期用改变的props来判断更新自身state。、
+	componentWillReceiveProps(){
+	...
+	}
+	shouldComponentUpdate(nextProps, nextState){      注：react性能优化非常重要的一环。组件接受新的state或者props时调用，
+		console.log('一、判断是否要更新数据')             我们可以设置在此对比前后两个props和state是否相同，如果相同则返回false阻止更新，
+		return true/false                                 因为相同的属性状态一定会生成相同的dom树，这样就不需要创造新的dom树和旧的dom树进行diff算法对比，
+	                                                      节省大量性能，尤其是在dom结构复杂的时候。
+	}
+	componentWillUpdate(nextProps, nextState){      
+	    console.log('二、组件数据将要更新')           注：组件初始化时不调用，只有在组件将要更新时才调用，此时可以修改state 
+	}
+	componentDidUpdate(){
+	     console.log('四、组件数据更新完成')
+	}
+
+	render(){                                         注：组件渲染
+		console.log('三、数据渲染render')
+	return(
+		<div> 
+			....
+		</div>
+	)
+	}
+    --------------------------------------------------------------------------------
+	组件销毁的时候:
+	componentWillUnmount                              注：组件将要卸载时调用，一些事件监听和定时器需要在此时清除。 
+	https://upload-images.jianshu.io/upload_images/11259201-dd8853db2e92505c.png?imageMogr2/auto-orient/strip|imageView2/2/w/740/format/webp
+	
+	

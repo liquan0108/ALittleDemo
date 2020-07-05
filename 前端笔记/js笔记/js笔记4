@@ -1,0 +1,132 @@
+DOM(重点):
+	js组成三部分:
+		ECMAScript: 描述了js语法和基本对象
+		BOM:  浏览器对象模型
+		DOM:  文档对象模型	
+			DOM为文档提供了结构化表示(DOM树)，并定义了如何通过脚本来访问文档结构。
+			目的其实就是为了能让js操作html.元素而制定的一个规范。
+									DOM树
+									文档
+									  |	
+								根元素(html)
+			head										body
+			  |											  |
+			.....										.....  
+	---------------------------------------------------------------------------------------------
+	节点:
+		每个html标签都是一个元素节点
+		标签中的我文字时文字节点
+		标签的属性则是属性节点
+		父子兄弟节点
+	---------------------------------------------------------------------------------------------
+	访问节点:
+		通过id:	    getElementById()
+		通过标签名:	getElementsByTagName()
+		通过类名:	getElementsByClassName()   有兼容性问题
+		通过关系访问:
+			父节点			 兄弟节点			     						 子节点(不用)										所有子节点
+			parentNode  	nextSibling	(下一个兄弟 )							firstChild(其他浏览器:第一个孩子)		childNodes(选出全部的孩子,换行也算,使用 .nodeType == 1 拿到元素节点)
+							nextElementSibling()(其他浏览器:下一个兄弟 )		firstElementChild(第一个孩子)			children(选取所有的孩子,不包括空格,无兼容性问题,但会包含被注释掉的节点)
+							previousSibling(上一个兄弟 )						lastChild(其他浏览器:最后一个孩子)
+							previousElementSibling(其他浏览器:上一个兄弟)	  	lastElementChild(最后一个孩子)
+	------------------------------------------------------------------------------------------------
+	访问/赋值属性
+	.offsetLeft         拿到css中的 left
+	.innerHtml = ".."   给对象内容区赋值 , 会解析标签字符串
+	.value              拿到对象的value值
+	---------------------------------------------------------------------------------------------
+	dom节点操作:
+		1.创建节点:
+			var noded_ = document.createElement(标签名)
+			给节点添加class:
+		2.获取属性
+				节点对象.getAttribute(属性名)
+		3.设置节点属性
+		
+			1)noded_.className = "...."
+			
+			2)节点对象.setAttribute(属性名,属性值)
+		4.移除节点属性
+			节点对象.removeAttribute(属性名)
+		5.插入节点:
+			1)appendChild()  添加一个子节点
+				父节点对象.appendChild(新节点对象)	
+				给父节点中插入一个子节点
+			2)insertBefore(新节点,子节点)   在某个子节点前添加一个新节点
+				 父节点.insertBefore(新节点,子节点) 给儿子认一个哥哥
+				 父节点.insertBefore(新节点,null)   插入到所有子节点的最后边
+		6.移除孩子节点
+			removeChild()
+			父节点.removeChild(要移除的孩子)
+		7.克隆/复制节点
+			cloneNode(true/false)
+				参数为true是:
+					复制本节点和其子节点
+				参数为false时:
+					只复制本节点,不复制它的子节点
+			要克隆的节点.cloneNode(false);		
+	---------------------------------------------------------------------------------------------
+	封装自己的 getElementsByClassName:
+		1.判断原生的getElementsByClassName是否可以使用
+		2.不可用则遍历所有的标签
+		3.同时判断若类名相同,则将标签对象存入数组中
+		3.最后返回标签对象数组
+
+       window.onload = function () {
+        function getClassNameObjects(param) {
+          if (document.getElementsByClassName(param)) {		//判断是否可以使用
+            return document.getElementsByClassName(param);    
+          } else {                       //不能使用     
+            var arr = [];
+            var allTag = document.getElementsByTagName("*");      //通配符	拿到所有标签对象
+            for (let i = 0; i < allTag.length; i++) {            //遍历数组              
+              if (allTag[i].className.length > param.length) {  // 类名长度若大于传入类名的长度,则可能具有多类名     class = "dom box1 box2"
+                var arr_ = allTag[i].className.split(" ");     //按空格截取字符串使之形成数组,             ["dom","box1","box2"]
+                for (let j = 0; j < arr_.length; j++) {       //再遍历数组,拿到类名
+                  if (arr_[j] == param) {                    //对比是否有相同的类名
+                    arr.push(allTag[i]);                    //若相同则将改元素对象存入数组中
+                  }
+                }
+              } else {                                //若类名长度和传入长度相同,在判断内容是否相同
+                if (allTag[i].className == param) {  //若于传入的类名相同则存入声明的数组中                
+                  arr.push(allTag[i]);
+                }
+              }
+            }
+            console.log(arr);
+            return arr;
+          }
+        }
+      };
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

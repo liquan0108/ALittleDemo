@@ -1,0 +1,74 @@
+生产环境打包速度慢，会拖累开发，所以开发时，用开发环境
+生产环境配置：
+	目的：
+	1.减小开发环境产生的bundle体积。
+	2.提取出css，防止闪屏（因为开发环境中打包后，css在bundle.js中，需要先引入bundle.js,再创建<style>标签引入css，会出现闪屏）
+	3.样式/js兼容。
+	----------------------------------------------------------------------------------------------------------------
+提取css：
+	1.安装插件：
+		cnpm i mini-css-extract-plugin -D
+	2.引入
+	cosnt MiniCssExtractPlugin = require('mini-css-extract-plugin');
+	const HtmlWebpackPlugin = require("html-webpack-plugin");
+module.export ={
+	entry:'./src/index.js',
+	output: {
+		filename: 'bundle.js',
+		path: resolve(__dirname,'build')
+	},
+	loader:{
+		rules:[
+		{
+			test: /\.css$/,
+			use:[
+				//这个loader取代style-loader.作用:提取js中的css成单独文件
+				MiniCssExtractP1ugin. loader,
+				//将css文件整合到js文件中
+				'css-loader'
+			]
+		}
+		]
+	},
+	plugins:[
+		new HtmlWebpackPlugin({
+		template: './src/index.html'
+		}),
+	// 3.使用	
+		new MiniCssExtractPlugin({
+		// 对生成的css文件重命名
+		filename: 'css/built.css'
+		})
+	],
+	mode: 'development',
+	devServer: {
+		contentBase: resolve(__dirname, "build"),
+	   
+		compress: true,
+	 
+		port: 3000,
+	   
+		open: true,
+	}
+}
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+同样地，我们在「package.json」文件的 scripts 字段中添加一个启动开发服务器的命令，如：
+"scripts": {
+    "build": "webpack",
+    "serve": "webpack-dev-server"
+  }
+
+此时左下角npm脚本处会出现，命令的快捷按钮
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+网络监听接口：
+	网络从断网连接时执行函数
+	window.ononline = function (){
+		.....
+	}
+	网络从连接断开时执行函数
+	window.onoffline = function () {
+		....
+	}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+全屏接口：
+	全屏：
+		注意兼容性
+	Element.onclick = function () {
+		if( element.fullscreenElemen) {
+			element.fullscreenElemen()
+		}
+		else if(element.webkitFullscreenElement) {
+				element.webkitFullscreenElement()
+		}
+		else if(element.mozFullScreenE1ement) {
+			element.mozFullScreenE1ement()
+		}
+		else if(element.msFullscreenElement) {
+			element.msFullscreenElement()
+		}
+	}
+	
+	取消全屏：
+		注意，用document.exitFullscreen(),不是 Element
+		
+	/*退出全屏*/
+	document.querySelector ( "#cancelFul1") . onclick= function(){ 
+		if( document.cancelFullScreen){
+			document.cancelFullScreen();
+		}
+		else if(document.webkitCancelFullScreen){
+			document.webkitCancelFullScreen();
+		else if(document.mozCance 1FullScreen){
+			document.mozCancelFullScreen( ) ;
+		}
+		else if(document.msCancelFullScreen){
+			document.msCancelFullScreen( );
+		}
+	}
+	
+	
+	判断是否全屏：
+		document.fullscreenElemen || document.webkitFullscreenElement  || document.mozFullScreenE1ement || document.msFullscreenElement
+		
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+FileReader:
+		/*FileReader:读取文件内容
+		* 1.readAsText():读取文本文件(可以使用Txt打开的文件)，返回文本字符串，默认编码是UTF-8
+		* 2.readAsBinaryString():读取任意类型的文件。 返回二进制字符串。这个方法不是用来读取
+		文件展示给用户看，而是存储文件。例如:读取文件的内容，获取二进制数据，传递给后台，后台接
+		收了数据之后，再将数据存在
+		* 3.readAsDataURL():读取文件获取一段以data开头的字符串，这段字符串的本质就是DataURL.
+			DataURL是一种将文件嵌入到文档的方案。DataURL是将资源转换为base64编码的字符串形式，
+		并且将这些内容直接存储在ur1中>>优化网站的加载速度和执行效率*/
+		
+		input 
+
+		var fr = new FileReader();
+		
+			fr.readAsDataURL(blob)；  读取blob类型文件，如上传使用的是<input type = 'file'/> 则blob为inputElement.file[0]
+			捕捉读取状态：
+				onload      读取成功时触发回调函数
+				onlaodend	读取成功时触发回调函数，无论是否成功
+				onloadstart 开始读取时触发
+				onerror		读取错误时触发
+				onabort		
+				onprogress	读取过程中持续触发
+			--------------------------------------------------------------------------------------------------------------
+			fr.result; 存储读取内容的结果(只有上传成功才可以读取到)，可复制给img的src属性，预览上传文件的效果
+			使用：
+			fr.onload = () = > {
+				imgElement.src = fr.result;
+			}
+
+-------------------------------------------------------------------------------------------------------------------------------------
+拖拽事件：
+	浏览器默认阻止拖拽事件，需要清除默认event.prenentDefault。
+	
