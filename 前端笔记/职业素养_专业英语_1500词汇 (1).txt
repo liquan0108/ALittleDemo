@@ -1,4 +1,4 @@
-      1. file n. 文件；v. 保存文件 
+﻿      1. file n. 文件；v. 保存文件 
       2. command n. 命令，指令 
       3. use v. 使用，用途 
       4. program n. 程序 
@@ -28,7 +28,7 @@
       28. text n. 正文，文本 
       29. drive v. 驱动；n. 驱动器 
       30. see v. 看，看出，查看 
-      31. name n. 名，名称；vt. 命名 
+      31. name n. 名，名称；vt. 命名 。。。
       32. record n. 记录 
       33. box n. 箱，匣，(逻辑)框 
       34. database n. 数据库 
