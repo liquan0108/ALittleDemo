@@ -1,4 +1,4 @@
-﻿      1. file n. 文件；v. 保存文件 
+      1. file n. 文件；v. 保存文件 
       2. command n. 命令，指令 
       3. use v. 使用，用途 
       4. program n. 程序 
@@ -13,7 +13,7 @@
       13. with prep. 用，与，随着 
       14. format n. 格式 
       15. change v. 更换，改变，变动 
-      16. cursor n. 光标 ，
+      16. cursor n. 光标 
       17. directory n. 目录，索引簿 
       18. from prep. 从，来自，以来 
       19. menu n. 菜单，目录 
